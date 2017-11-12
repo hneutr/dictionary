@@ -4,7 +4,7 @@ The Multifaceted Dictionary application.
 
 ## Runtime Environment
 
-What's needed to run the applciation.
+What's needed to run the application.
 
 * Database: MySQL 5.7.20 (must be installed on user's system for app to use database)(dictionary DB needs to be setup correctly, automatically, somehow.)
 * DB Connector: MySQL Connector 5.1.2.1 (distributed with jar)
