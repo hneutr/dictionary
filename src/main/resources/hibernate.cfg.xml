@@ -6,11 +6,8 @@
 <hibernate-configuration>
 	<session-factory>
 
-		<!-- JDBC Connection and Configuration -->
+		<!-- JDBC Connector. See DatabaseUtil for more connection details. -->
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dictionarydb?createDatabaseIfNotExist=true</property>
-		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">root</property>
 		
 		<!-- Print SQL Output -->
 		<property name="show_sql">true</property>
