@@ -1,5 +1,6 @@
 package dictionary.utils;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -13,6 +14,11 @@ import org.hibernate.cfg.Configuration;
  */
 public class DatabaseUtil {
 
+	/*
+	 * The name of the dictionary database.
+	 */
+	public static final String DB_NAME = "dictionarydb";
+	
 	/**
 	 * The name of the hibernate config file.
 	 */
