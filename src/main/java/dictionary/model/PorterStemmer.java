@@ -6,7 +6,7 @@ package dictionary.model;
  *
  * The porter stemmer implementation for stemming
  */
-public class PorterStemmer {
+public class PorterStemmer implements IStemmer{
 	int version;
 	
 	/**
