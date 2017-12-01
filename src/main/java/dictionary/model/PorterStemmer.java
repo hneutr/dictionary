@@ -1,5 +1,7 @@
 package dictionary.model;
 
+import edu.stanford.nlp.process.*;
+
 /**
  * 
  * @author Adam Wiemerslage
