@@ -22,17 +22,66 @@ public class DictionaryEntry {
 	private int id;
 	
 	/**
-	 * The stem for this entry. The stem is used for collision detection.
+	 * The stem for this word.
 	 */
 	private String wordStem;
 	
 	/**
-	 * The root word for this entry. The root word is the main word form for this entry.
+	 * The root.
 	 */
-	private String wordRoot; // TODO: replace with the WordForm type...
+	private WordForm wordRoot;
 	
 	/**
-	 * The word senses for this entry.
+	 * All word senses.
 	 */
-	//private List wordSenses; // TODO: have be a list of WordSense once that type is created
+	private ArrayList<WordSense> wordSenses;
+	
+	public boolean collides(DictionaryEntry entry) {
+		
+	}
+	
+	/**
+	 * Returns the word senses of this entry.
+	 * 
+	 * @return
+	 */
+	public ArrayList<WordSense> getWordSenses() {
+		return this.wordSenses;
+	}
+	
+	/**
+	 * Resolves a collision between this and the given entry.
+	 * 
+	 * @param e
+	 * @return
+	 */
+	public List<String> resolveCollision(DictionaryEntry e) {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param ws
+	 * @return
+	 */
+	public List<String> merge(WordSense ws) {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param ws
+	 */
+	public void mergeSense(WordSense ws) {
+
+	}
+	
+	/**
+	 * Adds a new word sense to this entry.
+	 * 
+	 * @param ws
+	 */
+	public void addSense(WordSense ws) {
+		this.wordSenses.add(ws);
+	}
 }
