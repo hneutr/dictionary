@@ -30,7 +30,7 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	/**
 	 * The root.
 	 */
-	private WordForm wordRoot;
+	//private WordForm wordRoot;
 	
 	/**
 	 * All word senses.
