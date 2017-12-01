@@ -12,15 +12,15 @@ import javax.persistence.Id;
  * The class for word senses. A dictionary can have one or more 
  * WordSense objects and a WordSense can only belong to one DictionaryEntry.
  */
-@Entity
+//@Entity
 public class WordSense implements ICollide<WordSense> {
 	
 	/**
 	 * The id that the DB will know this object by.
 	 */
-	@Id
-    @GeneratedValue
-	private int id;
+	//@Id
+    //@GeneratedValue
+	//private int id;
 
 	/**
 	 * Word forms of this word sense.
