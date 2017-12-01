@@ -1,6 +1,7 @@
 package dictionary.model;
 
 import java.util.List;
+import java.io.File;
 
 /**
  * @author alexkillian
@@ -17,7 +18,14 @@ public class FileUtils {
 	 * @param file
 	 * @return true if the type is valid, false otherwise.
 	 */
-	public boolean checkFileType(String file) {
+	public static boolean checkFileType(String file) {
+		if ( file.length() > 3 ) {
+			String extension = file.substring(file.length() - 3);
+			
+			if (extension.equals("csv"))
+				return true;
+		}
+		
 		return false;
 	}
 	
