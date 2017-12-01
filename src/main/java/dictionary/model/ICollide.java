@@ -5,7 +5,7 @@ package dictionary.model;
  *
  * Interface that says which classes can detect collisions.
  */
-public interface ICollide {
+public interface ICollide<T> {
 
 	/**
 	 * Tests if the given object collides with this object.
@@ -14,5 +14,5 @@ public interface ICollide {
 	 * @param o The object to test against.
 	 * @return
 	 */
-	public boolean collides(Object o);
+	public boolean collides(T o);
 }
