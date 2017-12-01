@@ -13,6 +13,11 @@ public class WordForm implements ICollide{
 	 */
 	String wordForm;
 	
+	/**
+	 * The algorithm for stemming that Istemmer sets
+	 */
+	Istemmer stemmerAlgo;
+	
 	public String getWordForm() {
 		return wordForm;
 	}
