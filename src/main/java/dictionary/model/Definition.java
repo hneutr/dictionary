@@ -6,7 +6,7 @@ package dictionary.model;
  *
  * This class represents a definition in a dictionary entry.
  */
-public class Definition implements ICollide{
+public class Definition implements ICollide<Definition> {
 	
 	/**
 	 * The Definition text

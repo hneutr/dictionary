@@ -6,7 +6,7 @@ package dictionary.model;
  * This class represents a part of speech in a dictionary entry.
  */
 
-public class PartOfSpeech implements ICollide {
+public class PartOfSpeech implements ICollide<PartOfSpeech> {
 	
 	/**
 	 * The Part of Speech label

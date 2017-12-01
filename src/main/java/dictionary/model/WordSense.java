@@ -2,13 +2,25 @@ package dictionary.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * @author alexkillian
  * 
  * The class for word senses. A dictionary can have one or more 
  * WordSense objects and a WordSense can only belong to one DictionaryEntry.
  */
-public class WordSense implements ICollide {
+@Entity
+public class WordSense implements ICollide<WordSense> {
+	
+	/**
+	 * The id that the DB will know this object by.
+	 */
+	@Id
+    @GeneratedValue
+	private int id;
 
 	/**
 	 * Word forms of this word sense.
@@ -31,11 +43,11 @@ public class WordSense implements ICollide {
 	 * @return
 	 */
 	public ArrayList<WordForm> getWorldForms() {
-		
+		return this.wordForms;
 	}
 	
 	@Override
-	public boolean collides(Object o) {
+	public boolean collides(WordSense o) {
 		return false;
 	}
 	
@@ -60,7 +72,7 @@ public class WordSense implements ICollide {
 	 * @return
 	 */
 	public String merge(WordSense wordSense) {
-		
+		return "";
 	}
 	
 	/**
@@ -69,6 +81,6 @@ public class WordSense implements ICollide {
 	 * @param wordFrom
 	 */
 	public void addWordForm(WordForm wordFrom) {
-		wordForms.add(wordForm);
+		wordForms.add(wordFrom);
 	}
 }

@@ -10,7 +10,7 @@ import dictionary.model.ICollide;
  *
  * Our controller for our dictionary application.
  */
-public class Dictionary implements ICollide {
+public class Dictionary implements ICollide<String> {
 
 	/**
 	 * Stores the entries (in memory).
@@ -36,8 +36,8 @@ public class Dictionary implements ICollide {
 		
 	}
 	
-	public boolean collides(Object s) {
-		
+	public boolean collides(String e) {
+		return false;
 	}
 	
 	/**

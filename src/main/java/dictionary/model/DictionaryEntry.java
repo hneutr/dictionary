@@ -1,5 +1,6 @@
 package dictionary.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Id;
  * This class represents a dictionary entry.
  */
 @Entity
-public class DictionaryEntry {
+public class DictionaryEntry implements ICollide<DictionaryEntry> {
 
 	/**
 	 * The id that the DB will know this object by.
@@ -37,7 +38,7 @@ public class DictionaryEntry {
 	private ArrayList<WordSense> wordSenses;
 	
 	public boolean collides(DictionaryEntry entry) {
-		
+		return false;
 	}
 	
 	/**
