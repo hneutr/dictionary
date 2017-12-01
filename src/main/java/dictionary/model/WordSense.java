@@ -46,7 +46,6 @@ public class WordSense implements ICollide<WordSense> {
 		return this.wordForms;
 	}
 	
-	@Override
 	public boolean collides(WordSense o) {
 		return false;
 	}

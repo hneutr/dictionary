@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * @author Alex Killian
@@ -28,9 +29,20 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	private String wordStem;
 	
 	/**
+	 * Constructor for DictionaryEntry.
+	 * 
+	 * @param wordStem
+	 */
+	public DictionaryEntry(String wordStem, WordForm wordRoot) {
+		this.wordStem = wordStem;
+		this.wordRoot = wordRoot;
+	}
+	
+	/**
 	 * The root.
 	 */
-	//private WordForm wordRoot;
+	@OneToOne
+	private WordForm wordRoot;
 	
 	/**
 	 * All word senses.

@@ -23,5 +23,6 @@
 
 		<!-- Model Class Mappings -->
 		<mapping class="dictionary.model.DictionaryEntry" />
+		<mapping class="dictionary.model.WordForm" />
 	</session-factory>
 </hibernate-configuration>
