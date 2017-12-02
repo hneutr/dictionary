@@ -18,10 +18,12 @@ public class DictionaryTestDriver {
 		
 		// test word sense
 		WordSense ws = new WordSense(new Definition("test"), new PartOfSpeech("Noun"));
+		ws.addWordForm(wf);
 		session.save(ws);
 		
 		// test entry
 		DictionaryEntry e = new DictionaryEntry("word", wf);
+		e.addSense(ws);
 		session.save(e);
 		
 		session.getTransaction().commit();
