@@ -2,9 +2,12 @@ package dictionary.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  * @author alexkillian
@@ -12,30 +15,44 @@ import javax.persistence.Id;
  * The class for word senses. A dictionary can have one or more 
  * WordSense objects and a WordSense can only belong to one DictionaryEntry.
  */
-//@Entity
+@Entity
 public class WordSense implements ICollide<WordSense> {
 	
 	/**
 	 * The id that the DB will know this object by.
 	 */
-	//@Id
-    //@GeneratedValue
-	//private int id;
+	@Id
+    @GeneratedValue
+	private int id;
 
 	/**
 	 * Word forms of this word sense.
 	 */
+	@Transient
 	private ArrayList<WordForm> wordForms;
 	
 	/**
 	 * The definition for this word sense.
 	 */
+	@Embedded
 	private Definition definition;
 	
 	/**
 	 * The POS for this word sense.
 	 */
+	@Embedded
 	private PartOfSpeech partOfSpeech;
+	
+	/**
+	 * WordSense constructor.
+	 * 
+	 * @param definition
+	 * @param partOfSpeech
+	 */
+	public WordSense(Definition definition, PartOfSpeech partOfSpeech) {
+		this.definition = definition;
+		this.partOfSpeech = partOfSpeech;
+	}
 	
 	/**
 	 * Returns all word forms associated with this WordSense.
