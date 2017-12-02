@@ -1,13 +1,13 @@
 package dictionary.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 /**
  * @author alexkillian
@@ -28,8 +28,8 @@ public class WordSense implements ICollide<WordSense> {
 	/**
 	 * Word forms of this word sense.
 	 */
-	@Transient
-	private ArrayList<WordForm> wordForms;
+	@OneToMany
+	private Collection<WordForm> wordForms = new ArrayList<WordForm>();
 	
 	/**
 	 * The definition for this word sense.
@@ -59,7 +59,7 @@ public class WordSense implements ICollide<WordSense> {
 	 * 
 	 * @return
 	 */
-	public ArrayList<WordForm> getWorldForms() {
+	public Collection<WordForm> getWorldForms() {
 		return this.wordForms;
 	}
 	
