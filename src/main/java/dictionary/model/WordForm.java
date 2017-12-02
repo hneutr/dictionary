@@ -3,6 +3,7 @@ package dictionary.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -30,12 +31,14 @@ public class WordForm implements ICollide<WordForm>{
 	 */
 	public WordForm(String wordForm) {
 		this.wordForm = wordForm;
+		this.stemmerAlgo = new PorterStemmer();
 	};
 	
 	/**
 	 * The algorithm for stemming that IStemmer sets
 	 */
-	//IStemmer stemmerAlgo;
+	@Transient
+	IStemmer stemmerAlgo;
 	
 	public String getWordForm() {
 		return wordForm;
