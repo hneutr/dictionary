@@ -1,7 +1,7 @@
 package dictionary.driver;
 
 import org.hibernate.Session;
-import dictionary.model.DictionaryEntry;
+import dictionary.model.*;
 import dictionary.utils.DatabaseUtil;
 
 public class DictionaryTestDriver {
@@ -12,7 +12,18 @@ public class DictionaryTestDriver {
 		Session session = DatabaseUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
-		DictionaryEntry e = new DictionaryEntry();
+		// test word form
+		WordForm wf = new WordForm("test");
+		session.save(wf);
+		
+		// test word sense
+		WordSense ws = new WordSense(new Definition("test"), new PartOfSpeech("Noun"));
+		ws.addWordForm(wf);
+		session.save(ws);
+		
+		// test entry
+		DictionaryEntry e = new DictionaryEntry("word", wf);
+		e.addSense(ws);
 		session.save(e);
 		
 		session.getTransaction().commit();

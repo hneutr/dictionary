@@ -1,7 +1,12 @@
 package dictionary.model;
 
 import java.util.List;
-import java.io.File;
+import java.nio.file.*;
+import java.nio.file.Files;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author alexkillian
@@ -19,6 +24,8 @@ public class FileUtils {
 	 * @return true if the type is valid, false otherwise.
 	 */
 	public static boolean checkFileType(String file) {
+		
+		
 		if ( file.length() > 3 ) {
 			String extension = file.substring(file.length() - 3);
 			
@@ -34,8 +41,28 @@ public class FileUtils {
 	 * 
 	 * @return
 	 */
-	private String loadFile() {
-		return "";
+	public ArrayList<String> loadFile(String file) {
+		Path path = Paths.get(baseDir + file);
+		
+		Stream<String> lineStream = null;
+		
+		ArrayList<String> realList = new ArrayList<String>();
+		
+		try {
+			lineStream = Files.lines(path);
+			
+			for (Object element : lineStream.collect(Collectors.toList())) {
+				String string = element.toString();
+				realList.add(string);
+			}
+		}
+		catch (IOException e) {
+		    System.err.println("IOException: " + e.getMessage());	
+		} finally {
+			lineStream.close();
+		}
+		
+		return realList;
 	}
 	
 	/**

@@ -1,11 +1,14 @@
 package dictionary.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * @author Alex Killian
@@ -28,14 +31,26 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	private String wordStem;
 	
 	/**
+	 * Constructor for DictionaryEntry.
+	 * 
+	 * @param wordStem
+	 */
+	public DictionaryEntry(String wordStem, WordForm wordRoot) {
+		this.wordStem = wordStem;
+		this.wordRoot = wordRoot;
+	}
+	
+	/**
 	 * The root.
 	 */
-	//private WordForm wordRoot;
+	@OneToOne
+	private WordForm wordRoot;
 	
 	/**
 	 * All word senses.
 	 */
-	private ArrayList<WordSense> wordSenses;
+	@OneToMany
+	private Collection<WordSense> wordSenses = new ArrayList<WordSense>();
 	
 	public boolean collides(DictionaryEntry entry) {
 		return false;
@@ -46,7 +61,7 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	 * 
 	 * @return
 	 */
-	public ArrayList<WordSense> getWordSenses() {
+	public Collection<WordSense> getWordSenses() {
 		return this.wordSenses;
 	}
 	
