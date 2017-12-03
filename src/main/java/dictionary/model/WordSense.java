@@ -43,6 +43,9 @@ public class WordSense implements ICollide<WordSense> {
 	@Embedded
 	private PartOfSpeech partOfSpeech;
 	
+	private WordSense() {
+	}
+	
 	/**
 	 * WordSense constructor.
 	 * 

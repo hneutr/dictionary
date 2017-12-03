@@ -26,6 +26,9 @@ public class WordForm implements ICollide<WordForm>{
 	 */
 	String wordForm;
 	
+	private WordForm() {
+	}
+	
 	/**
 	 * Constructor.
 	 */

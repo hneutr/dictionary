@@ -30,6 +30,9 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	 */
 	private String wordStem;
 	
+	private DictionaryEntry() {
+	}
+	
 	/**
 	 * Constructor for DictionaryEntry.
 	 * 
@@ -103,5 +106,9 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	
 	public WordForm getWordRoot() {
 		return this.wordRoot;
+	}
+	
+	public int getId() {
+		return id;
 	}
 }
