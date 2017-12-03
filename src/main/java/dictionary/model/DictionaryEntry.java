@@ -100,4 +100,8 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	public void addSense(WordSense ws) {
 		this.wordSenses.add(ws);
 	}
+	
+	public WordForm getWordRoot() {
+		return this.wordRoot;
+	}
 }
