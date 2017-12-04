@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 /**
  * @author alexkillian
  *
@@ -71,7 +75,26 @@ public class FileUtils {
 	 * @param content
 	 * @return
 	 */
-	private List<DictionaryEntry> parseEntries(String content) {
+	private List<DictionaryEntry> parseEntries(String content, String contentType) {
+		CSVParser parser;
+		
+		try {
+			parser = CSVParser.parse(content, CSVFormat.EXCEL);
+			
+			ArrayList<DictionaryEntry> entryList = new ArrayList<DictionaryEntry>();
+			
+			for (CSVRecord record: parser.getRecords()) {
+				WordForm root = new WordForm(record.get("wordRoot"));
+				DictionaryEntry entry = new DictionaryEntry(record.get("wordStem"), root);
+				
+				
+			    System.out.println(record);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 	
