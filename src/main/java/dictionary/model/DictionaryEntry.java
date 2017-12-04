@@ -5,10 +5,15 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.Session;
+
+import dictionary.utils.DatabaseUtil;
 
 /**
  * @author Alex Killian
@@ -46,13 +51,13 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	/**
 	 * The root.
 	 */
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	private WordForm wordRoot;
 	
 	/**
 	 * All word senses.
 	 */
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)  
 	private Collection<WordSense> wordSenses = new ArrayList<WordSense>();
 	
 	public boolean collides(DictionaryEntry entry) {
