@@ -18,7 +18,9 @@ public class RemoveCommand extends DictionaryCommand {
 	@Override
 	void run() {
 		this.entry = Dictionary.getInstance().lookupByEntry(this.query);
-		Dictionary.getInstance().remove(this.entry);
+		
+		if (this.entry != null)
+			Dictionary.getInstance().remove(this.entry);
 	}
 
 	@Override

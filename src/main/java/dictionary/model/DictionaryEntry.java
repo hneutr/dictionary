@@ -126,4 +126,15 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	public int getId() {
 		return id;
 	}
+	
+	public String toString() {
+		String output = "";
+		output = output + "WordRoot: " + this.wordRoot + "\n";
+		
+		for (WordSense sense : this.getWordSenses()) {
+			output = output + sense.toString();
+		}
+		
+		return output;
+	}
 }

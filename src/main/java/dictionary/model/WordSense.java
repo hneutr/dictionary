@@ -115,4 +115,26 @@ public class WordSense implements ICollide<WordSense> {
 	public void addWordForm(WordForm wordFrom) {
 		wordForms.add(wordFrom);
 	}
+	
+	public String toString() {
+		String output = "";
+		
+		String definitionString = this.definition.getDefinition();
+		
+		if (! definitionString.isEmpty())
+			output = output + "Definition: " + definitionString + "\n";
+		
+		String partOfSpeechString = this.partOfSpeech.getPartOfSpeech();
+		if (! partOfSpeechString.isEmpty())
+			output = output + "PartOfSpeech: " + partOfSpeechString + "\n";
+		
+		if (! this.wordForms.isEmpty()){
+			output = output + "WordForms: \n";
+			for (WordForm curWordForm : this.wordForms ) {
+				output = output + "\t" + curWordForm.getWordForm() + "\n";
+			}
+		}
+				
+		return output;
+	}
 }
