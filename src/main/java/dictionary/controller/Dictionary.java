@@ -158,9 +158,13 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> es = getAllEntries();
 		for (DictionaryEntry e : es) {
 			if (e.getWordRoot().getWordForm().equals(str)) {
+				session.getTransaction().commit();
+				session.close();
 				return e;
 			}
 		}
+		session.getTransaction().commit();
+		session.close();
 		return null;
 	}
 	

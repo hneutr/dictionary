@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -28,7 +29,7 @@ public class WordSense implements ICollide<WordSense> {
 	/**
 	 * Word forms of this word sense.
 	 */
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)  
 	private Collection<WordForm> wordForms = new ArrayList<WordForm>();
 	
 	/**
@@ -128,12 +129,12 @@ public class WordSense implements ICollide<WordSense> {
 	public String toString() {
 		String output = "";
 		
-		String definitionString = this.definition.getDefinition();
+		String definitionString = (this.definition != null) ? this.definition.getDefinition() : "";
 		
 		if (! definitionString.isEmpty())
 			output = output + "Definition: " + definitionString + "\n";
 		
-		String partOfSpeechString = this.partOfSpeech.getPartOfSpeech();
+		String partOfSpeechString = (this.partOfSpeech != null) ? this.partOfSpeech.getPartOfSpeech() : "";
 		if (! partOfSpeechString.isEmpty())
 			output = output + "PartOfSpeech: " + partOfSpeechString + "\n";
 		

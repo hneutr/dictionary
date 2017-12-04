@@ -120,7 +120,7 @@ public class DictionaryTest {
 		
 		// check defs
 		//Definition runDef = new Definition("move at a speed faster than a walk and never have both or all the feet on the ground at the same time.");
-		//assertEquals(getFirst(run.getWordSenses()).getDefinition(), runDef);
+		//assertTrue(runDef.collides(getFirst(run.getWordSenses()).getDefinition()));
 		//assertEquals(smile.getWordRoot().getWordForm(), "smile");
 		//assertEquals(dance.getWordRoot().getWordForm(), "dance");
 		//assertEquals(cheese.getWordRoot().getWordForm(), "cheese");
