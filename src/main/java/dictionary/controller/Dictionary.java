@@ -73,11 +73,29 @@ public class Dictionary implements ICollide<String> {
 	/**
 	 * Adds a new sense to an existing entry.
 	 * 
+	 * This will also make sure both the given entry and word sense are in the DB
+	 * and add them if they are not, or update if they are.
+	 * 
 	 * @param ws
 	 * @param e
 	 */
 	public void addSense(WordSense ws, DictionaryEntry e) {
 		
+		// Guard against null.
+		if (e == null) {
+			System.err.println("Can't add sense to null entry!");
+			return;
+		}
+		if (ws == null) {
+			System.err.println("Can't add null sense to entry!");
+			return;
+		}
+		
+		// Add the word sense
+		e.addSense(ws);
+		
+		// Make sure all is saved
+		addEntry(e);
 	}
 	
 	public boolean collides(String e) {
@@ -91,6 +109,28 @@ public class Dictionary implements ICollide<String> {
 	 */
 	public void remove(DictionaryEntry e) {
 		
+		// Remove from cache
+		int i = entries.indexOf(e);
+		if (i >= 0) entries.remove(i);
+		
+		// Remove from DB
+		Session session = DatabaseUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		// Delete all word senses and word entries
+		for (WordSense ws : e.getWordSenses()) {
+			for (WordForm wf : ws.getWorldForms()) {
+				session.delete(wf);
+			}
+			session.delete(ws);
+		}
+		if (e.getWordRoot() != null) 
+			session.delete(e.getWordRoot());
+		
+		// Delete entry
+		session.delete(e);
+		session.getTransaction().commit();
+		session.close();
 	}
 	
 	/**
