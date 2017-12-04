@@ -1,5 +1,7 @@
 package dictionary.view;
 
+import dictionary.controller.Dictionary;
+
 /**
  * 
  * @author Hunter Wapman
