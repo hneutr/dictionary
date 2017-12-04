@@ -27,14 +27,15 @@ public class WordForm implements ICollide<WordForm>{
 	String wordForm;
 	
 	private WordForm() {
+		this.stemmerAlgo = new PorterStemmer();
 	}
 	
 	/**
 	 * Constructor.
 	 */
 	public WordForm(String wordForm) {
+		this();
 		this.wordForm = wordForm;
-		this.stemmerAlgo = new PorterStemmer();
 	};
 	
 	/**
@@ -45,6 +46,10 @@ public class WordForm implements ICollide<WordForm>{
 	
 	public String getWordForm() {
 		return wordForm;
+	}
+	
+	public String getStem() {
+		return stemmerAlgo.stem(getWordForm());
 	}
 	
 	public boolean collides(WordForm wf) {

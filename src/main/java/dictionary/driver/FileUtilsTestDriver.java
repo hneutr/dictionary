@@ -2,6 +2,8 @@ package dictionary.driver;
 
 import org.hibernate.Session;
 
+import java.util.List;
+
 import dictionary.model.DictionaryEntry;
 import dictionary.model.FileUtils;
 import dictionary.utils.DatabaseUtil;
@@ -29,5 +31,10 @@ public class FileUtilsTestDriver {
 		// there should be three lines
 		if (lines.size() != 3)
 			throw new AssertionError();
+		
+		List<DictionaryEntry> entries = utils.getEntries("entry_list.csv");
+		for (DictionaryEntry entry: entries) {
+			System.out.print(entry.getWordRoot().getWordForm() + "\n");
+		}
 	}
 }

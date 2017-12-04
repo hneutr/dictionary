@@ -38,9 +38,9 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	 * 
 	 * @param wordStem
 	 */
-	public DictionaryEntry(String wordStem, WordForm wordRoot) {
-		this.wordStem = wordStem;
+	public DictionaryEntry(WordForm wordRoot) {
 		this.wordRoot = wordRoot;
+		this.wordStem = this.wordRoot.getStem();
 	}
 	
 	/**

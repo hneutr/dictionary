@@ -75,27 +75,25 @@ public class FileUtils {
 	 * @param content
 	 * @return
 	 */
-	private List<DictionaryEntry> parseEntries(String content, String contentType) {
-		CSVParser parser;
+	private ArrayList<DictionaryEntry> parseEntries(ArrayList<String> content) {
+		ArrayList<DictionaryEntry> entryList = new ArrayList<DictionaryEntry>();
 		
-		try {
-			parser = CSVParser.parse(content, CSVFormat.EXCEL);
+		for (String record: content) {
+			String[] columns = record.split(","); 
+			WordForm root = new WordForm(columns[0]);
+			DictionaryEntry entry = new DictionaryEntry(root);
 			
-			ArrayList<DictionaryEntry> entryList = new ArrayList<DictionaryEntry>();
 			
-			for (CSVRecord record: parser.getRecords()) {
-				WordForm root = new WordForm(record.get("wordRoot"));
-				DictionaryEntry entry = new DictionaryEntry(record.get("wordStem"), root);
-				
-				
-			    System.out.println(record);
+			if (columns.length > 1) {
+				Definition definition = new Definition(columns[1]);
+				WordSense ws = new WordSense(definition, null);
+				entry.addSense(ws);
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			entryList.add(entry);
 		}
 		
-		return null;
+		return entryList;
 	}
 	
 	/**
@@ -105,6 +103,11 @@ public class FileUtils {
 	 * @return
 	 */
 	public List<DictionaryEntry> getEntries(String file) {
+		if (checkFileType(file)) {
+			ArrayList<String> lines = loadFile(file);
+			ArrayList<DictionaryEntry> entries = parseEntries(lines);
+			return entries;
+		}
 		return null;
 	}
 	
