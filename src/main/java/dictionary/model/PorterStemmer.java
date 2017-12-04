@@ -1,6 +1,6 @@
 package dictionary.model;
 
-//import edu.stanford.nlp.process.Stemmer;
+import org.tartarus.martin.*;
 
 /**
  * 
@@ -17,7 +17,14 @@ public class PorterStemmer implements IStemmer{
 	 * @return stemmed version of the string
 	 */
 	public String stem(String s) {
-		//Stemmer stemmer = new Stemmer();
-		return s; //stemmer.stem(s);
+		Stemmer stemmer = new Stemmer();
+		// Add each char in the string to the stemmer
+		for (int i = 0; i < s.length(); i++) {
+	        stemmer.add(s.charAt(i));
+	    }
+		
+		stemmer.stem();
+		
+		return stemmer.toString();
 	}
 }
