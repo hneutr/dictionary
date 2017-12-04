@@ -119,13 +119,20 @@ public class DictionaryTest {
 		assertEquals(gargle.getWordRoot().getWordForm(), "gargle");
 		
 		// check defs
-		//Definition runDef = new Definition("move at a speed faster than a walk and never have both or all the feet on the ground at the same time.");
-		//assertTrue(runDef.collides(getFirst(run.getWordSenses()).getDefinition()));
-		//assertEquals(smile.getWordRoot().getWordForm(), "smile");
-		//assertEquals(dance.getWordRoot().getWordForm(), "dance");
-		//assertEquals(cheese.getWordRoot().getWordForm(), "cheese");
-		//assertEquals(gargle.getWordRoot().getWordForm(), "gargle");
+		Definition runDef = new Definition("move at a speed faster than a walk and never have both or all the feet on the ground at the same time.");
+		assertEquals(getFirst(run.getWordSenses()).getDefinition().getDefinition(), runDef.getDefinition());
+		
+		Definition smileDef = new Definition("form one's features into a pleased or kind or amused expression");
+		assertEquals(getFirst(smile.getWordSenses()).getDefinition().getDefinition(), smileDef.getDefinition());
+		
+		Definition danceDef = new Definition("move rhythmically to music");
+		assertEquals(getFirst(dance.getWordSenses()).getDefinition().getDefinition(), danceDef.getDefinition());
 	
+		Definition cheeseDef = new Definition("a food made from the pressed curds of milk");
+		assertEquals(getFirst(cheese.getWordSenses()).getDefinition().getDefinition(), cheeseDef.getDefinition());
+		
+		Definition gargleDef = new Definition("wash one's mouth and throat with a liquid kept in motion by exhaling through it.");
+		assertEquals(getFirst(gargle.getWordSenses()).getDefinition().getDefinition(), gargleDef.getDefinition());
 	}
 
 }
