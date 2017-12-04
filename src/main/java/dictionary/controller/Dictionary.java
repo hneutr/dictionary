@@ -1,6 +1,7 @@
 package dictionary.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 
@@ -138,6 +139,26 @@ public class Dictionary implements ICollide<String> {
 	 */
 	public void addFromFile(String file) {
 		
+	}
+	
+	/**
+	 * Look up in the dictionary.
+	 */
+	public DictionaryEntry lookupByEntry(String str) {
+		
+		Session session = DatabaseUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		List<DictionaryEntry> es = session.createQuery("from DictionaryEntry").list();
+		for (DictionaryEntry e : es) {
+			if (e.getWordRoot().getWordForm().equals(str)) {
+				session.getTransaction().commit();
+				session.close();
+				return e;
+			}
+		}
+		session.getTransaction().commit();
+		session.close();
+		return null;
 	}
 	
 	/**

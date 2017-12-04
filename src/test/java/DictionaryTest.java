@@ -43,17 +43,23 @@ public class DictionaryTest {
 		Session session = DatabaseUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		DictionaryEntry re = (DictionaryEntry) session.get(DictionaryEntry.class, e.getId());
+		
+		assertTestEntry(e, re);
+		
 		session.getTransaction().commit();
 		session.close();
+	}
+	
+	private static void assertTestEntry(DictionaryEntry e, DictionaryEntry re) {
 		
 		// Check id
 		assertEquals(e.getId(), re.getId());
 		
 		// Check root word
-		assertEquals(e.getWordRoot().getWordForm(), WF.getWordForm());
+		assertEquals(re.getWordRoot().getWordForm(), WF.getWordForm());
 		
 		// Check word sense
-		for (WordSense ws : e.getWordSenses()) {
+		for (WordSense ws : re.getWordSenses()) {
 			for (WordForm wf : ws.getWorldForms()) {
 				assertEquals(wf.getWordForm(), WF.getWordForm());
 			}
@@ -61,7 +67,7 @@ public class DictionaryTest {
 	}
 
 	@Test
-	public void addRemoveEntryTest() {
+	public void addRemoveLookupTest() {
 		
 		/*
 		 * Case 0: add entry.
@@ -72,7 +78,18 @@ public class DictionaryTest {
 		Dictionary.getInstance().addEntry(e);
 		
 		// Make sure it was added correctly
-		checkTestEntry(e);
+		Session session = DatabaseUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		DictionaryEntry re = (DictionaryEntry) session.get(DictionaryEntry.class, e.getId());
+		assertTestEntry(e, re);
+		session.getTransaction().commit();
+		session.close();
+		
+		/*
+		 * Case 1: lookup entry
+		 */
+		re = Dictionary.getInstance().lookupByEntry("test");
+		assertNotNull(re);
 		
 		/*
 		 * Case 1: remove entry
