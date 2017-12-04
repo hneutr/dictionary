@@ -40,7 +40,7 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	 */
 	public DictionaryEntry(WordForm wordRoot) {
 		this.wordRoot = wordRoot;
-		this.wordStem = wordRoot.getStem();
+		this.wordStem = this.wordRoot.getStem();
 	}
 	
 	/**

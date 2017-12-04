@@ -33,5 +33,8 @@ public class FileUtilsTestDriver {
 			throw new AssertionError();
 		
 		List<DictionaryEntry> entries = utils.getEntries("entry_list.csv");
+		for (DictionaryEntry entry: entries) {
+			System.out.print(entry.getWordRoot().getWordForm() + "\n");
+		}
 	}
 }

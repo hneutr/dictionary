@@ -34,7 +34,7 @@ public class WordForm implements ICollide<WordForm>{
 	 * Constructor.
 	 */
 	public WordForm(String wordForm) {
-		super();
+		this();
 		this.wordForm = wordForm;
 	};
 	
@@ -49,7 +49,7 @@ public class WordForm implements ICollide<WordForm>{
 	}
 	
 	public String getStem() {
-		return stemmerAlgo.stem(this.wordForm);
+		return stemmerAlgo.stem(getWordForm());
 	}
 	
 	public boolean collides(WordForm wf) {
