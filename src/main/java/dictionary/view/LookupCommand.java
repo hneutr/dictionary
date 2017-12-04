@@ -20,7 +20,13 @@ public class LookupCommand extends DictionaryCommand {
 	@Override
 	void run() {
 		if (this.queryType.equals("WordForm")) {
-			Dictionary.getInstance().lookupByEntry(this.query);
+			entry = Dictionary.getInstance().lookupByEntry(this.query);
+			
+			if (entry != null) {
+				System.out.println(entry.toString());
+			} else {
+				System.out.print("No entry found.");
+			}
 		}
 	}
 
