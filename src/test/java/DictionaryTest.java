@@ -17,29 +17,18 @@ import dictionary.utils.DatabaseUtil;
 
 public class DictionaryTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
+	private static final WordForm WF = new WordForm("test");
+	private static final Definition DEF = new Definition("test");
+	private static final PartOfSpeech POS = new PartOfSpeech("Noun");
+	private static final WordSense WS = new WordSense(DEF, POS);
 	
 	private static DictionaryEntry getTestEntry() {
 		
 		// test word form
-		WordForm wf = new WordForm("test");
+		WordForm wf = WF;
 		
 		// test word sense
-		WordSense ws = new WordSense(new Definition("test"), new PartOfSpeech("Noun"));
+		WordSense ws = WS;
 		ws.addWordForm(wf);
 		
 		// test entry
@@ -54,22 +43,58 @@ public class DictionaryTest {
 		Session session = DatabaseUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		DictionaryEntry re = (DictionaryEntry) session.get(DictionaryEntry.class, e.getId());
+		
+		assertTestEntry(e, re);
+		
 		session.getTransaction().commit();
 		session.close();
+	}
+	
+	private static void assertTestEntry(DictionaryEntry e, DictionaryEntry re) {
 		
 		// Check id
 		assertEquals(e.getId(), re.getId());
+		
+		// Check root word
+		assertEquals(re.getWordRoot().getWordForm(), WF.getWordForm());
+		
+		// Check word sense
+		for (WordSense ws : re.getWordSenses()) {
+			for (WordForm wf : ws.getWorldForms()) {
+				assertEquals(wf.getWordForm(), WF.getWordForm());
+			}
+		}
 	}
 
 	@Test
-	public void addEntryTest() {
+	public void addRemoveLookupTest() {
+		
+		/*
+		 * Case 0: add entry.
+		 */
 		
 		// Get a test entry and try to add it
 		DictionaryEntry e = getTestEntry();
 		Dictionary.getInstance().addEntry(e);
 		
 		// Make sure it was added correctly
-		checkTestEntry(e);
+		Session session = DatabaseUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		DictionaryEntry re = (DictionaryEntry) session.get(DictionaryEntry.class, e.getId());
+		assertTestEntry(e, re);
+		session.getTransaction().commit();
+		session.close();
+		
+		/*
+		 * Case 1: lookup entry
+		 */
+		re = Dictionary.getInstance().lookupByEntry("test");
+		assertNotNull(re);
+		
+		/*
+		 * Case 1: remove entry
+		 */
+		Dictionary.getInstance().remove(e);
 	}
 
 }

@@ -1,5 +1,7 @@
 package dictionary.view;
 
+import dictionary.model.*;
+
 /**
  * 
  * @author Hunter Wapman
@@ -7,9 +9,9 @@ package dictionary.view;
  */
 public abstract class DictionaryCommand extends AbstractCommand {
 	// stuff for later
-	//private DicationaryEntry entry;
-	//private Definition definition;
-	//private PartOfSpeech partOfSpeech;
-	//private WordForm wordForm;
-	//private WordSense wordSense;
+	protected DictionaryEntry entry;
+	protected Definition definition;
+	protected PartOfSpeech partOfSpeech;
+	protected WordForm wordForm;
+	protected WordSense wordSense;
 }
