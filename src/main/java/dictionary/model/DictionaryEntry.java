@@ -134,7 +134,7 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	
 	public String toString() {
 		String output = "";
-		output = output + "WordRoot: " + this.wordRoot + "\n";
+		output = output + "WordRoot: " + this.wordRoot.getWordForm() + "\n";
 		
 		for (WordSense sense : this.getWordSenses()) {
 			output = output + sense.toString();
