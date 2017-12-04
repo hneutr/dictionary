@@ -56,6 +56,21 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	private Collection<WordSense> wordSenses = new ArrayList<WordSense>();
 	
 	public boolean collides(DictionaryEntry entry) {
+		String comparisonEntryWordRoot = entry.getWordRoot().getWordForm();
+		
+		if (this.wordStem.equals(comparisonEntryWordRoot))
+			return true;
+		else if (this.wordRoot.equals(comparisonEntryWordRoot))
+			return true;
+		else {
+			for (WordSense curWordSense : this.getWordSenses()) {
+				for (WordSense comparisonWordSense : entry.getWordSenses()) {
+					if (curWordSense.collides(comparisonWordSense))
+						return true;
+				}
+			}
+		}
+		
 		return false;
 	}
 	

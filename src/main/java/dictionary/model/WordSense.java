@@ -67,6 +67,19 @@ public class WordSense implements ICollide<WordSense> {
 	}
 	
 	public boolean collides(WordSense o) {
+		if (this.definition.collides(o.definition))
+			return true;
+		else if (this.partOfSpeech.collides(o.partOfSpeech))
+			return true;
+		else {
+			for (WordForm curWordForm : this.wordForms ) {
+				for (WordForm compWordForm : o.wordForms) {
+					if ( curWordForm.collides(compWordForm))
+						return true;
+				}
+			}
+		}
+	
 		return false;
 	}
 	
