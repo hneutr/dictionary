@@ -1,12 +1,14 @@
 package dictionary.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Session;
 
 import dictionary.model.Definition;
 import dictionary.model.DictionaryEntry;
+import dictionary.model.FileUtils;
 import dictionary.model.WordSense;
 import dictionary.utils.DatabaseUtil;
 import dictionary.model.ICollide;
@@ -36,10 +38,11 @@ public class Dictionary implements ICollide<String> {
 	/**
 	 * Stores the entries (in memory).
 	 */
-	private ArrayList<DictionaryEntry> entries = new ArrayList<DictionaryEntry>();
+	private List<DictionaryEntry> entries = new ArrayList<DictionaryEntry>();
 	
 	// Private so it can't be manually created
 	private Dictionary() {
+		this.entries = this.getAllEntries();
 	}
 	
 	/**
@@ -138,7 +141,11 @@ public class Dictionary implements ICollide<String> {
 	 * Adds from a given file.
 	 */
 	public void addFromFile(String file) {
-		
+		FileUtils utils = new FileUtils();
+		Collection<DictionaryEntry> es = utils.getEntries(file);
+		for (DictionaryEntry e : es) {
+			addEntry(e);
+		}
 	}
 	
 	/**
@@ -148,17 +155,30 @@ public class Dictionary implements ICollide<String> {
 		
 		Session session = DatabaseUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		List<DictionaryEntry> es = session.createQuery("from DictionaryEntry").list();
+		Collection<DictionaryEntry> es = getAllEntries();
 		for (DictionaryEntry e : es) {
 			if (e.getWordRoot().getWordForm().equals(str)) {
-				session.getTransaction().commit();
-				session.close();
 				return e;
 			}
 		}
-		session.getTransaction().commit();
-		session.close();
 		return null;
+	}
+	
+	/**
+	 * Returns all entries.
+	 * 
+	 * @return
+	 */
+	public List<DictionaryEntry> getAllEntries() {
+		//if (this.entries == null) {
+			Session session = DatabaseUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			List<DictionaryEntry> es = session.createQuery("from DictionaryEntry").list();
+			session.getTransaction().commit();
+			session.close();
+			return es;
+		//}
+		//return this.entries;
 	}
 	
 	/**

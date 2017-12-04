@@ -91,6 +91,15 @@ public class WordSense implements ICollide<WordSense> {
 	}
 	
 	/**
+	 * Returns the definition.
+	 * 
+	 * @return
+	 */
+	public Definition getDefinition() {
+		return this.definition;
+	}
+	
+	/**
 	 * Sets the part of the speech.
 	 */
 	public void setPartOfSpeech(PartOfSpeech partOfSpeech) {

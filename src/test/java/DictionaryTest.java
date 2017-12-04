@@ -1,5 +1,8 @@
 import static org.junit.Assert.*;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -32,22 +35,9 @@ public class DictionaryTest {
 		ws.addWordForm(wf);
 		
 		// test entry
-		DictionaryEntry e = new DictionaryEntry("word", wf);
+		DictionaryEntry e = new DictionaryEntry(wf);
 		e.addSense(ws);
 		return e;
-	}
-	
-	private static void checkTestEntry(DictionaryEntry e) {
-		
-		// Retrieve entry from DB
-		Session session = DatabaseUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		DictionaryEntry re = (DictionaryEntry) session.get(DictionaryEntry.class, e.getId());
-		
-		assertTestEntry(e, re);
-		
-		session.getTransaction().commit();
-		session.close();
 	}
 	
 	private static void assertTestEntry(DictionaryEntry e, DictionaryEntry re) {
@@ -92,9 +82,50 @@ public class DictionaryTest {
 		assertNotNull(re);
 		
 		/*
-		 * Case 1: remove entry
+		 * Case 2: remove entry
 		 */
 		Dictionary.getInstance().remove(e);
+	}
+	
+	private static WordSense getFirst(Collection<WordSense> senses) {
+		for (WordSense ws : senses) return ws;
+		return null;
+	}
+	
+	@Test
+	public void addFromFileTest() {
+		
+		/*
+		 * Case 0: load from file and check
+		 */
+		Dictionary.getInstance().addFromFile("entry_list.csv");
+		List<DictionaryEntry> es = Dictionary.getInstance().getAllEntries();
+		
+		// check count
+		assertEquals(es.size(), 5);
+		
+		// get entries
+		DictionaryEntry run = es.get(0);
+		DictionaryEntry smile = es.get(1);
+		DictionaryEntry dance = es.get(2);
+		DictionaryEntry cheese = es.get(3);
+		DictionaryEntry gargle = es.get(4);
+		
+		// check root words
+		assertEquals(run.getWordRoot().getWordForm(), "run");
+		assertEquals(smile.getWordRoot().getWordForm(), "smile");
+		assertEquals(dance.getWordRoot().getWordForm(), "dance");
+		assertEquals(cheese.getWordRoot().getWordForm(), "cheese");
+		assertEquals(gargle.getWordRoot().getWordForm(), "gargle");
+		
+		// check defs
+		//Definition runDef = new Definition("move at a speed faster than a walk and never have both or all the feet on the ground at the same time.");
+		//assertEquals(getFirst(run.getWordSenses()).getDefinition(), runDef);
+		//assertEquals(smile.getWordRoot().getWordForm(), "smile");
+		//assertEquals(dance.getWordRoot().getWordForm(), "dance");
+		//assertEquals(cheese.getWordRoot().getWordForm(), "cheese");
+		//assertEquals(gargle.getWordRoot().getWordForm(), "gargle");
+	
 	}
 
 }
