@@ -1,6 +1,7 @@
 package dictionary.view;
 
 import java.util.ArrayList;
+import dictionary.controller.Dictionary;
 
 /**
  * 
