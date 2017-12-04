@@ -11,6 +11,13 @@
 	<!-- Dependencies -->
 	<dependencies>
 	
+		<!-- Porter Stemmer -->
+		<dependency>
+		    <groupId>gov.sandia.foundry</groupId>
+		    <artifactId>porter-stemmer</artifactId>
+		    <version>1.4</version>
+		</dependency>
+	
 		<!-- JUnit -->
 		<dependency>
 	      <groupId>junit</groupId>
