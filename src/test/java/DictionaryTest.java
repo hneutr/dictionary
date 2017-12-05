@@ -87,8 +87,8 @@ public class DictionaryTest {
 		Dictionary.getInstance().remove(e);
 	}
 	
-	private static WordSense getFirst(Collection<WordSense> senses) {
-		for (WordSense ws : senses) return ws;
+	private static <T> T getFirst(Collection<T> list) {
+		for (T item : list) return item;
 		return null;
 	}
 	
@@ -118,21 +118,36 @@ public class DictionaryTest {
 		assertEquals(cheese.getWordRoot().getWordForm(), "cheese");
 		assertEquals(gargle.getWordRoot().getWordForm(), "gargle");
 		
+		// get word senses
+		WordSense runSense = getFirst(run.getWordSenses());
+		assertNotNull(runSense);
+		WordSense smileSense = getFirst(smile.getWordSenses());
+		assertNotNull(smileSense);
+		WordSense danceSense = getFirst(dance.getWordSenses());
+		assertNotNull(danceSense);
+		WordSense cheeseSense = getFirst(cheese.getWordSenses());
+		assertNotNull(cheeseSense);
+		WordSense gargleSense = getFirst(gargle.getWordSenses());
+		assertNotNull(gargleSense);
+		
+		// check that the word sense also has the word forms
+		assertEquals(getFirst(runSense.getWorldForms()).getWordForm(), "run");
+		assertEquals(getFirst(smileSense.getWorldForms()).getWordForm(), "smile");
+		assertEquals(getFirst(danceSense.getWorldForms()).getWordForm(), "dance");
+		assertEquals(getFirst(cheeseSense.getWorldForms()).getWordForm(), "cheese");
+		assertEquals(getFirst(gargleSense.getWorldForms()).getWordForm(), "gargle");
+		
 		// check defs
 		Definition runDef = new Definition("move at a speed faster than a walk and never have both or all the feet on the ground at the same time.");
-		assertEquals(getFirst(run.getWordSenses()).getDefinition().getDefinition(), runDef.getDefinition());
-		
+		assertEquals(runSense.getDefinition().getDefinition(), runDef.getDefinition());
 		Definition smileDef = new Definition("form one's features into a pleased or kind or amused expression");
-		assertEquals(getFirst(smile.getWordSenses()).getDefinition().getDefinition(), smileDef.getDefinition());
-		
+		assertEquals(smileSense.getDefinition().getDefinition(), smileDef.getDefinition());
 		Definition danceDef = new Definition("move rhythmically to music");
-		assertEquals(getFirst(dance.getWordSenses()).getDefinition().getDefinition(), danceDef.getDefinition());
-	
+		assertEquals(danceSense.getDefinition().getDefinition(), danceDef.getDefinition());
 		Definition cheeseDef = new Definition("a food made from the pressed curds of milk");
-		assertEquals(getFirst(cheese.getWordSenses()).getDefinition().getDefinition(), cheeseDef.getDefinition());
-		
+		assertEquals(cheeseSense.getDefinition().getDefinition(), cheeseDef.getDefinition());
 		Definition gargleDef = new Definition("wash one's mouth and throat with a liquid kept in motion by exhaling through it.");
-		assertEquals(getFirst(gargle.getWordSenses()).getDefinition().getDefinition(), gargleDef.getDefinition());
+		assertEquals(gargleSense.getDefinition().getDefinition(), gargleDef.getDefinition());
 	}
 
 }

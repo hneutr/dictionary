@@ -6,13 +6,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import dictionary.model.Definition;
 import dictionary.model.DictionaryEntry;
 import dictionary.model.FileUtils;
 import dictionary.model.WordSense;
 import dictionary.utils.DatabaseUtil;
 import dictionary.model.ICollide;
-import dictionary.model.PartOfSpeech;
 import dictionary.model.WordForm;
 
 /**

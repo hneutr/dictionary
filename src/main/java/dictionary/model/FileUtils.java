@@ -87,6 +87,7 @@ public class FileUtils {
 			if (columns.length > 1) {
 				Definition definition = new Definition(columns[1]);
 				WordSense ws = new WordSense(definition, null);
+				ws.addWordForm(root);
 				entry.addSense(ws);
 			}
 			
