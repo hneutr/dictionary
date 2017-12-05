@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import dictionary.controller.Dictionary;
@@ -20,18 +21,22 @@ import dictionary.utils.DatabaseUtil;
 
 public class DictionaryTest {
 
-	private static final WordForm WF = new WordForm("test");
-	private static final Definition DEF = new Definition("test");
-	private static final PartOfSpeech POS = new PartOfSpeech("Noun");
-	private static final WordSense WS = new WordSense(DEF, POS);
+	private static final String WF_STR = "test";
+	private static final String DEF_STR = "test";
+	private static final String POS_STR = "Noun";
+	
+	private static <T> T getFirst(Collection<T> list) {
+		for (T item : list) return item;
+		return null;
+	}
 	
 	private static DictionaryEntry getTestEntry() {
 		
 		// test word form
-		WordForm wf = WF;
+		WordForm wf = new WordForm(WF_STR);
 		
 		// test word sense
-		WordSense ws = WS;
+		WordSense ws = new WordSense(new Definition(DEF_STR), new PartOfSpeech(POS_STR));
 		ws.addWordForm(wf);
 		
 		// test entry
@@ -46,12 +51,12 @@ public class DictionaryTest {
 		assertEquals(e.getId(), re.getId());
 		
 		// Check root word
-		assertEquals(re.getWordRoot().getWordForm(), WF.getWordForm());
+		assertEquals(re.getWordRoot().getWordForm(), WF_STR);
 		
 		// Check word sense
 		for (WordSense ws : re.getWordSenses()) {
 			for (WordForm wf : ws.getWorldForms()) {
-				assertEquals(wf.getWordForm(), WF.getWordForm());
+				assertEquals(wf.getWordForm(), WF_STR);
 			}
 		}
 	}
@@ -87,9 +92,21 @@ public class DictionaryTest {
 		Dictionary.getInstance().remove(e);
 	}
 	
-	private static <T> T getFirst(Collection<T> list) {
-		for (T item : list) return item;
-		return null;
+	@Test
+	public void addSenseTest() {
+		
+		/*
+		 * Case 0: get an entry then add to it. Make sure it made it to DB.
+		 */
+		DictionaryEntry e = getTestEntry();
+		WordSense newWs = new WordSense(new Definition("supported by one's feet"), new PartOfSpeech("Verb"));
+		newWs.addWordForm(new WordForm("Stand"));
+		Dictionary.getInstance().addSense(newWs, e);
+		
+		// Remove from DB
+		Dictionary.getInstance().remove(e);
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+		
 	}
 	
 	@Test
@@ -148,6 +165,11 @@ public class DictionaryTest {
 		assertEquals(cheeseSense.getDefinition().getDefinition(), cheeseDef.getDefinition());
 		Definition gargleDef = new Definition("wash one's mouth and throat with a liquid kept in motion by exhaling through it.");
 		assertEquals(gargleSense.getDefinition().getDefinition(), gargleDef.getDefinition());
+		
+		// Remove all from DB
+		for (DictionaryEntry e : es)
+			Dictionary.getInstance().remove(e);
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 
 }
