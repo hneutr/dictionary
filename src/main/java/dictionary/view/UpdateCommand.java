@@ -18,7 +18,6 @@ public class UpdateCommand extends DictionaryCommand {
 	public UpdateCommand(String query, String queryType) {
 		this.query = query;
 		this.queryType = queryType;
-		this.status = "Haven't done anything yet.";
 	}
 	
 	public UpdateCommand(String query, String queryType, String target) {
