@@ -168,6 +168,17 @@ public class WordSense implements ICollide<WordSense> {
 		}
 	}
 	
+	/**
+	 * Updates the specified WordForm in this word sense.
+	 * @param sourceWordForm the word for to change
+	 * @param destinationWordForm the word for to change it to
+	 * @return
+	 */	
+	public void updateWordForm(WordForm sourceWordForm, WordForm destinationWordForm) {
+		removeWordForm(sourceWordForm);
+		addWordForm(destinationWordForm);
+	}
+	
 	public String toString() {
 		String output = "";
 		
