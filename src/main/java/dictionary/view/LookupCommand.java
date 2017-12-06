@@ -1,7 +1,10 @@
 package dictionary.view;
 
+import dictionary.model.DictionaryEntry;
 import dictionary.model.WordForm;
 import dictionary.controller.Dictionary;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * 
@@ -11,6 +14,7 @@ import dictionary.controller.Dictionary;
 public class LookupCommand extends DictionaryCommand {
 	private String query;
 	private String queryType;
+	private Collection<DictionaryEntry> entries = new ArrayList<DictionaryEntry>();
 	
 	public LookupCommand(String query, String queryType) {
 		this.query = query;
@@ -20,12 +24,14 @@ public class LookupCommand extends DictionaryCommand {
 	@Override
 	void run() {
 		if (this.queryType.equals("WordForm")) {
-			entry = Dictionary.getInstance().lookupByEntry(this.query);
-			
-			if (entry != null) {
-				System.out.println(entry.toString());
+			entries = Dictionary.getInstance().lookupByEntry(this.query);
+
+			if (entries.size() != 0){
+				for (DictionaryEntry entry : entries){
+					System.out.println(entry.toString());					
+				}
 			} else {
-				System.out.print("No entry found.");
+				System.out.print("No entries found.");
 			}
 		}
 	}

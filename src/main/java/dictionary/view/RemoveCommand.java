@@ -2,6 +2,8 @@ package dictionary.view;
 
 import dictionary.controller.Dictionary;
 import dictionary.model.DictionaryEntry;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * 
@@ -10,6 +12,7 @@ import dictionary.model.DictionaryEntry;
  */
 public class RemoveCommand extends DictionaryCommand {
 	private String query;
+	private Collection<DictionaryEntry> entries = new ArrayList<DictionaryEntry>();
 	
 	public RemoveCommand(String query) {
 		this.query = query;
@@ -17,10 +20,16 @@ public class RemoveCommand extends DictionaryCommand {
 
 	@Override
 	void run() {
-		this.entry = Dictionary.getInstance().lookupByEntry(this.query);
+		this.entries = Dictionary.getInstance().lookupByEntry(this.query); 
 		
-		if (this.entry != null)
-			Dictionary.getInstance().remove(this.entry);
+		if (entries.size() != 0){
+			for (DictionaryEntry entry : entries){
+				Dictionary.getInstance().remove(entry);					
+			}
+		} else {
+			System.out.print("No entries found.");
+		}
+
 	}
 
 	@Override
