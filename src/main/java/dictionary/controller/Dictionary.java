@@ -147,23 +147,71 @@ public class Dictionary implements ICollide<String> {
 	}
 	
 	/**
-	 * Look up in the dictionary.
+	 * Look up by word.
 	 */
-	public DictionaryEntry lookupByEntry(String str) {
-		
+	public Collection<DictionaryEntry> lookupByEntry(String word) {
+		Collection<DictionaryEntry> results = new ArrayList<DictionaryEntry>();
 		Session session = DatabaseUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		Collection<DictionaryEntry> es = getAllEntries();
-		for (DictionaryEntry e : es) {
-			if (e.getWordRoot().getWordForm().equals(str)) {
-				session.getTransaction().commit();
-				session.close();
-				return e;
+		for (DictionaryEntry e : getAllEntries()) {
+			if (e.getWordRoot().getWordForm().equals(word)) {
+				results.add(e);
+			}
+			else {
+				WSFor:
+				for (WordSense ws : e.getWordSenses()) {
+					for (WordForm wf : ws.getWorldForms()) {
+						if (wf.getWordForm().equals(word)) {
+							results.add(e);
+							break WSFor;
+						}
+					}
+				}
 			}
 		}
 		session.getTransaction().commit();
 		session.close();
-		return null;
+		return results;
+	}
+	
+	/**
+	 * Lookup by definition.
+	 */
+	public Collection<DictionaryEntry> lookupByDefinition(String def) {
+		Collection<DictionaryEntry> results = new ArrayList<DictionaryEntry>();
+		Session session = DatabaseUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		for (DictionaryEntry e : getAllEntries()) {
+			for (WordSense ws : e.getWordSenses()) {
+				if (ws.getDefinition().getDefinition().equals(def)) {
+					results.add(e);
+					break;
+				}
+			}
+		}
+		session.getTransaction().commit();
+		session.close();
+		return results;
+	}
+	
+	/**
+	 * Lookup by POS.
+	 */
+	public Collection<DictionaryEntry> lookupByPartOfSpeech(String pos) {
+		Collection<DictionaryEntry> results = new ArrayList<DictionaryEntry>();
+		Session session = DatabaseUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		for (DictionaryEntry e : getAllEntries()) {
+			for (WordSense ws : e.getWordSenses()) {
+				if (ws.getPartOfSpeech().getPartOfSpeech().equals(pos)) {
+					results.add(e);
+					break;
+				}
+			}
+		}
+		session.getTransaction().commit();
+		session.close();
+		return results;
 	}
 	
 	/**

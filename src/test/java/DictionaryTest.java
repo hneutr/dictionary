@@ -4,11 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import dictionary.controller.Dictionary;
@@ -21,6 +16,14 @@ import dictionary.utils.DatabaseUtil;
 
 public class DictionaryTest {
 
+	// Defs for loaded test entries
+	private static final String RUN_DEF_STR = "move at a speed faster than a walk and never have both or all the feet on the ground at the same time.";
+	private static final String SMILE_DEF_STR = "form one's features into a pleased or kind or amused expression";
+	private static final String DANCE_DEF_STR = "move rhythmically to music";
+	private static final String CHEESE_DEF_STR = "a food made from the pressed curds of milk";
+	private static final String GARGLE_DEF_STR ="wash one's mouth and throat with a liquid kept in motion by exhaling through it.";
+	
+	// Properties for test entry
 	private static final String WF_STR = "walk";
 	private static final String DEF_STR = "move via ones feet";
 	private static final String POS_STR = "Verb";
@@ -83,7 +86,7 @@ public class DictionaryTest {
 		session.close();
 		
 		// Also look up and test that way
-		re = Dictionary.getInstance().lookupByEntry(WF_STR);
+		re = getFirst(Dictionary.getInstance().lookupByEntry(WF_STR));
 		assertTestEntry(e, re);
 		
 		/*
@@ -94,7 +97,7 @@ public class DictionaryTest {
 	}
 	
 	@Test
-	public void addLookupByEntryTest() {
+	public void lookupByEntryTest() {
 		
 		// Load some entries to work with
 		Dictionary.getInstance().addFromFile("entry_list.csv");
@@ -103,7 +106,7 @@ public class DictionaryTest {
 		/*
 		 * Case 0: lookup entry
 		 */
-		DictionaryEntry re = Dictionary.getInstance().lookupByEntry("dance");
+		DictionaryEntry re = getFirst(Dictionary.getInstance().lookupByEntry("dance"));
 		assertNotNull(re);
 		// Make sure the wf matches
 		assertEquals(re.getWordRoot().getWordForm(), "dance");
@@ -111,7 +114,7 @@ public class DictionaryTest {
 		/*
 		 * Case 1: lookup a different entry
 		 */
-		re = Dictionary.getInstance().lookupByEntry("gargle");
+		re = getFirst(Dictionary.getInstance().lookupByEntry("gargle"));
 		assertNotNull(re);
 		// Make sure the wf matches
 		assertEquals(re.getWordRoot().getWordForm(), "gargle");
@@ -119,12 +122,73 @@ public class DictionaryTest {
 		/*
 		 * Case 2: lookup item that does not exist
 		 */
-		re = Dictionary.getInstance().lookupByEntry("tomorrow");
+		re = getFirst(Dictionary.getInstance().lookupByEntry("tomorrow"));
 		assertNull(re);
 		
 		// Remove all from DB
 		for (DictionaryEntry e : es)
 			Dictionary.getInstance().remove(e);
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	@Test
+	public void lookupByDefintionTest() {
+		
+		// Load some entries to work with
+		Dictionary.getInstance().addFromFile("entry_list.csv");
+		Collection<DictionaryEntry> es = Dictionary.getInstance().getAllEntries();
+		
+		/*
+		 * Case 0: lookup entry
+		 */
+		DictionaryEntry re = getFirst(Dictionary.getInstance().lookupByDefinition(CHEESE_DEF_STR));
+		assertNotNull(re);
+		// Make sure the wf matches
+		assertEquals(re.getWordRoot().getWordForm(), "cheese");
+		
+		/*
+		 * Case 1: lookup a different entry
+		 */
+		re = getFirst(Dictionary.getInstance().lookupByDefinition(RUN_DEF_STR));
+		assertNotNull(re);
+		// Make sure the wf matches
+		assertEquals(re.getWordRoot().getWordForm(), "run");
+		
+		/*
+		 * Case 2: lookup item that does not exist
+		 */
+		re = getFirst(Dictionary.getInstance().lookupByDefinition("a thing"));
+		assertNull(re);
+		
+		// Remove all from DB
+		for (DictionaryEntry e : es)
+			Dictionary.getInstance().remove(e);
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	@Test
+	public void lookupByPartOfSpeechTest() {
+		
+		// Load entry
+		DictionaryEntry e = getTestEntry();
+		Dictionary.getInstance().addEntry(e);
+		
+		/*
+		 * Case 0: lookup entry
+		 */
+		DictionaryEntry re = getFirst(Dictionary.getInstance().lookupByPartOfSpeech("Verb"));
+		assertNotNull(re);
+		// Make sure the wf matches
+		assertEquals(re.getWordRoot().getWordForm(), "walk");
+		
+		/*
+		 * Case 2: lookup item that does not exist
+		 */
+		re = getFirst(Dictionary.getInstance().lookupByPartOfSpeech("Noun"));
+		assertNull(re);
+		
+		// Remove all from DB
+		Dictionary.getInstance().remove(e);
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
@@ -198,15 +262,15 @@ public class DictionaryTest {
 		assertEquals(getFirst(gargleSense.getWorldForms()).getWordForm(), "gargle");
 		
 		// check defs
-		Definition runDef = new Definition("move at a speed faster than a walk and never have both or all the feet on the ground at the same time.");
+		Definition runDef = new Definition(RUN_DEF_STR);
 		assertEquals(runSense.getDefinition().getDefinition(), runDef.getDefinition());
-		Definition smileDef = new Definition("form one's features into a pleased or kind or amused expression");
+		Definition smileDef = new Definition(SMILE_DEF_STR);
 		assertEquals(smileSense.getDefinition().getDefinition(), smileDef.getDefinition());
-		Definition danceDef = new Definition("move rhythmically to music");
+		Definition danceDef = new Definition(DANCE_DEF_STR);
 		assertEquals(danceSense.getDefinition().getDefinition(), danceDef.getDefinition());
-		Definition cheeseDef = new Definition("a food made from the pressed curds of milk");
+		Definition cheeseDef = new Definition(CHEESE_DEF_STR);
 		assertEquals(cheeseSense.getDefinition().getDefinition(), cheeseDef.getDefinition());
-		Definition gargleDef = new Definition("wash one's mouth and throat with a liquid kept in motion by exhaling through it.");
+		Definition gargleDef = new Definition(GARGLE_DEF_STR);
 		assertEquals(gargleSense.getDefinition().getDefinition(), gargleDef.getDefinition());
 		
 		// Remove all from DB
