@@ -48,9 +48,6 @@ public class UpdateCommand extends DictionaryCommand {
 				Dictionary.getInstance().updateDefinition(query, idx, target);
 				status = getIdentifierString(query, idx) + ": set Definition to " + target;
 				break;
-			case WORD_SENSE_QUERY_TYPE:
-				setNotSupportedStatus(WORD_SENSE_QUERY_TYPE);
-				break;
 			case PART_OF_SPEECH_QUERY_TYPE: 
 				Dictionary.getInstance().updatePartOfSpeech(query, idx, target);
 				status = getIdentifierString(query, idx) + ": set Part of Speech to " + target;
@@ -60,14 +57,8 @@ public class UpdateCommand extends DictionaryCommand {
 				status = getIdentifierString(query, idx, oldWordForm) + ": set Word Form to " + target;
 				break;
 			default: 
+				setNotSupportedStatus(queryType);
 				break;
 		}
 	}
-
-	@Override
-	void displayStatus() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

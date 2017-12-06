@@ -23,6 +23,10 @@ public abstract class DictionaryCommand extends AbstractCommand {
 	public static final String DEFINITION_QUERY_TYPE = "definition";
 	public static final String WORD_FORM_QUERY_TYPE = "wordform";
 	
+	public void displayStatus(){
+		System.out.println(status);
+	}
+	
 	protected void setNotSupportedStatus(String queryType) {
 		this.status = queryType + " is not supported";
 	}

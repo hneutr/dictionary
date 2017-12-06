@@ -22,6 +22,7 @@ public class LookupCommand extends DictionaryCommand {
 
 	@Override
 	void run() {
+		boolean validQuery = true;
 		switch (queryType) {
 			case DICTIONARY_ENTRY_QUERY_TYPE: 
 				entries = Dictionary.getInstance().lookupByEntry(query);
@@ -33,22 +34,20 @@ public class LookupCommand extends DictionaryCommand {
 				entries = Dictionary.getInstance().lookupByPartOfSpeech(query);
 				break;
 			default: 
+				setNotSupportedStatus(queryType);
+				validQuery = false;
 				break;
 		}
-			
-		if (entries.size() != 0){
-			for (DictionaryEntry entry : entries){
-				System.out.println(entry.toString());					
+		
+		if (validQuery) {
+			if (entries.size() != 0){
+				status = "";
+				for (DictionaryEntry entry : entries){
+					status = status + entry.toString();				
+				}
+			} else {
+				status = "No entries found.";
 			}
-		} else {
-			System.out.print("No entries found.");
 		}
 	}
-		
-	@Override
-	void displayStatus() {
-		// TODO Auto-generated method stub
-
-	}
-
 }
