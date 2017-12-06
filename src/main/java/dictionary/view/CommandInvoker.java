@@ -7,6 +7,6 @@ package dictionary.view;
  */
 public class CommandInvoker {
 	public void addToQueue(AbstractCommand command) {
-		command.run();
+		command.execute();
 	}
 }
