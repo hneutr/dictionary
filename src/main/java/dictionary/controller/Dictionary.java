@@ -241,6 +241,20 @@ public class Dictionary implements ICollide<String> {
 	}
 	
 	/**
+	 * Removes the def from the specified word sense.
+	 * 
+	 * @param word
+	 * @param idx
+	 */
+	public void removeDefinition(String word, int idx) {
+		Collection<DictionaryEntry> entries = lookupByEntry(word);
+		for (DictionaryEntry e : entries) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) ws.removeDefinition();
+		}
+	}
+	
+	/**
 	 * 
 	 * @param ws
 	 * @param e
