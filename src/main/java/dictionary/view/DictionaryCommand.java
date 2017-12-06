@@ -14,4 +14,10 @@ public abstract class DictionaryCommand extends AbstractCommand {
 	protected PartOfSpeech partOfSpeech;
 	protected WordForm wordForm;
 	protected WordSense wordSense;
+	
+	public static final String DICTIONARY_ENTRY_QUERY_TYPE = "entry";
+	public static final String WORD_SENSE_QUERY_TYPE = "wordsense";
+	public static final String PART_OF_SPEECH_QUERY_TYPE = "partofspeech";
+	public static final String DEFINITION_QUERY_TYPE = "definition";
+	public static final String WORD_FORM_QUERY_TYPE = "wordform";
 }

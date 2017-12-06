@@ -16,7 +16,7 @@ public class DemoTestDriver {
 		command = new LookupCommand("cheese", "WordForm");
 		commandRunner.addToQueue(command);
 		
-		command = new RemoveCommand("dance");
+		command = new RemoveCommand("dance", DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE);
 		commandRunner.addToQueue(command);
 		
 		command = new LookupCommand("dance", "WordForm");
