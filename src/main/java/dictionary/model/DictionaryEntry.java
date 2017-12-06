@@ -89,6 +89,23 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 	}
 	
 	/**
+	 * Return the word sense that corresponds to the given index
+	 * 
+	 * @param wordSenseIdx: The index of the word sense
+	 * @return The actual WordSense at that index
+	 */
+	public WordSense getWordSenseByIdx(int wordSenseIdx) {
+		int i = 0;
+		for (WordSense sense : this.getWordSenses()) {
+			if (wordSenseIdx == i) {
+				return sense;
+			}
+			i++;
+		}
+		return null;
+	}
+	
+	/**
 	 * Resolves a collision between this and the given entry.
 	 * 
 	 * @param e
