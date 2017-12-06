@@ -15,6 +15,7 @@ public abstract class DictionaryCommand extends AbstractCommand {
 	protected WordForm wordForm;
 	protected WordSense wordSense;
 	
+	public static final String FILE_QUERY_TYPE = "file";
 	public static final String DICTIONARY_ENTRY_QUERY_TYPE = "entry";
 	public static final String WORD_SENSE_QUERY_TYPE = "wordsense";
 	public static final String PART_OF_SPEECH_QUERY_TYPE = "partofspeech";

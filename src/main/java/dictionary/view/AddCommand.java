@@ -13,36 +13,45 @@ import dictionary.model.WordSense;
  *
  */
 public class AddCommand extends DictionaryCommand {
-	private String fileName;
-	private String additionType;
-	private String word;
-	private String def;
-	private String pos;
+	private String queryType;
+	private String query;
+	private String target;
+	private int idx;
 	
-	public AddCommand(String fileName) {
-		this.fileName = fileName;
-		this.additionType = "FromFile";
+	public AddCommand(String query, String queryType) {
+		this.query = query;
+		this.queryType = queryType;
 	}
 	
-	public AddCommand(String word, String def, String pos) {
-		this.word = word;
-		this.def = def;
-		this.pos = pos;
+	public AddCommand(String query, String queryType, int idx, String target) {
+		this(query, queryType);
+		this.idx = idx;
+		this.target = target;
 	}
 	
 	@Override
 	public void run() {
-		if (fileName != null) {
-			if (this.additionType.equals("FromFile"))
-				Dictionary.getInstance().addFromFile(this.fileName);
-		}
-		else {
-			WordForm wf = new WordForm(word);
-			WordSense ws = new WordSense(new Definition(def), new PartOfSpeech(pos));
-			ws.addWordForm(wf);
-			DictionaryEntry e = new DictionaryEntry(wf);
-			e.addSense(ws);
-			Dictionary.getInstance().addEntry(e);
+		switch (queryType) {
+			case FILE_QUERY_TYPE:
+				Dictionary.getInstance().addFromFile(this.query);
+				break;
+			case DICTIONARY_ENTRY_QUERY_TYPE:
+				Dictionary.getInstance().addDictionaryEntry(this.query);
+				break;
+			case WORD_SENSE_QUERY_TYPE:
+				Dictionary.getInstance().addWordSense(this.query);
+				break;
+			case DEFINITION_QUERY_TYPE:
+				Dictionary.getInstance().addDefinition(this.query, this.idx, this.target);
+				break;
+			case PART_OF_SPEECH_QUERY_TYPE:
+				Dictionary.getInstance().addPartOfSpeech(this.query, this.idx, this.target);
+				break;
+			case WORD_FORM_QUERY_TYPE:
+				Dictionary.getInstance().addWordForm(this.query, this.idx, this.target);
+				break;
+			default:
+				break;
 		}
 	}
 	
