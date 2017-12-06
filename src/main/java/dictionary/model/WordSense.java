@@ -2,6 +2,7 @@ package dictionary.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -132,6 +133,39 @@ public class WordSense implements ICollide<WordSense> {
 	 */
 	public void addWordForm(WordForm wordFrom) {
 		wordForms.add(wordFrom);
+	}
+	
+	/**
+	 * Removes the definition from this word sense.
+	 * 
+	 * @return
+	 */	
+	public void removeDefinition() {
+		setDefinition(new Definition(""));
+	}
+
+	/**
+	 * Removes the PartOfSpeech from this word sense.
+	 * 
+	 * @return
+	 */	
+	public void removePartOfSpeech() {
+		setPartOfSpeech(new PartOfSpeech(""));
+	}
+
+	/**
+	 * Removes the specified WordForm from this word sense.
+	 * 
+	 * @return
+	 */	
+	public void removeWordForm(WordForm wf) {
+		for (Iterator<WordForm> iter = this.getWorldForms().iterator(); iter.hasNext(); ) {
+			WordForm ownWordForm = iter.next();
+
+			if (ownWordForm.collides(wf)) {
+				iter.remove();
+			}
+		}
 	}
 	
 	public String toString() {
