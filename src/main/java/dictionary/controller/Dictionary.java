@@ -62,6 +62,7 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
 		for (DictionaryEntry e : es) {
 			e.addSense(new WordSense(new Definition(""), new PartOfSpeech("")));
+			addEntry(e); // make sure entry is up to date
 		}
 	}
 	
