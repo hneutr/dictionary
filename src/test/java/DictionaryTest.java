@@ -92,7 +92,7 @@ public class DictionaryTest {
 		/*
 		 * Case 1: remove entry
 		 */
-		Dictionary.getInstance().remove(e);
+		Dictionary.getInstance().removeDictionaryEntry(e.getWordRoot().getWordForm());
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
@@ -127,7 +127,7 @@ public class DictionaryTest {
 		
 		// Remove all from DB
 		for (DictionaryEntry e : es)
-			Dictionary.getInstance().remove(e);
+			Dictionary.getInstance().removeDictionaryEntry(e.getWordRoot().getWordForm());
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
@@ -162,7 +162,7 @@ public class DictionaryTest {
 		
 		// Remove all from DB
 		for (DictionaryEntry e : es)
-			Dictionary.getInstance().remove(e);
+			Dictionary.getInstance().removeDictionaryEntry(e.getWordRoot().getWordForm());
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
@@ -188,7 +188,7 @@ public class DictionaryTest {
 		assertNull(re);
 		
 		// Remove all from DB
-		Dictionary.getInstance().remove(e);
+		Dictionary.getInstance().removeDictionaryEntry(e.getWordRoot().getWordForm());
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
@@ -204,7 +204,7 @@ public class DictionaryTest {
 		Dictionary.getInstance().addSense(newWs, e);
 		
 		// Remove from DB
-		Dictionary.getInstance().remove(e);
+		Dictionary.getInstance().removeDictionaryEntry(e.getWordRoot().getWordForm());
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 		
 	}
@@ -275,7 +275,7 @@ public class DictionaryTest {
 		
 		// Remove all from DB
 		for (DictionaryEntry e : es)
-			Dictionary.getInstance().remove(e);
+			Dictionary.getInstance().removeDictionaryEntry(e.getWordRoot().getWordForm());
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 

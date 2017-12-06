@@ -109,30 +109,34 @@ public class Dictionary implements ICollide<String> {
 	 * 
 	 * @param e
 	 */
-	public void remove(DictionaryEntry e) {
+	public void removeDictionaryEntry(String word) {
 		
-		// Remove from cache
-		int i = entries.indexOf(e);
-		if (i >= 0) entries.remove(i);
-		
-		// Remove from DB
-		Session session = DatabaseUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		
-		// Delete all word senses and word entries
-		for (WordSense ws : e.getWordSenses()) {
-			for (WordForm wf : ws.getWorldForms()) {
-				session.delete(wf);
+		// Lookup
+		Collection<DictionaryEntry> es = lookupByEntry(word);	
+		for (DictionaryEntry e : es) {
+			// Remove from cache
+			int i = entries.indexOf(e);
+			if (i >= 0) entries.remove(i);
+			
+			// Remove from DB
+			Session session = DatabaseUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			
+			// Delete all word senses and word entries
+			for (WordSense ws : e.getWordSenses()) {
+				for (WordForm wf : ws.getWorldForms()) {
+					session.delete(wf);
+				}
+				session.delete(ws);
 			}
-			session.delete(ws);
+			if (e.getWordRoot() != null) 
+				session.delete(e.getWordRoot());
+			
+			// Delete entry
+			session.delete(e);
+			session.getTransaction().commit();
+			session.close();
 		}
-		if (e.getWordRoot() != null) 
-			session.delete(e.getWordRoot());
-		
-		// Delete entry
-		session.delete(e);
-		session.getTransaction().commit();
-		session.close();
 	}
 	
 	/**
