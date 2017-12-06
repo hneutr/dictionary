@@ -255,6 +255,54 @@ public class Dictionary implements ICollide<String> {
 	}
 	
 	/**
+	 * Removes the specified word sense.
+	 * 
+	 * @param word
+	 * @param idx
+	 */
+	public void removeWordSense(String word, int idx) {
+		Collection<DictionaryEntry> entries = lookupByEntry(word);
+		for (DictionaryEntry e : entries) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) e.removeSense(ws);
+		}
+	}
+	
+	/**
+	 * Removes the specified POS.
+	 * 
+	 * @param word
+	 * @param idx
+	 */
+	public void removePartOfSpeech(String word, int idx) {
+		Collection<DictionaryEntry> entries = lookupByEntry(word);
+		for (DictionaryEntry e : entries) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) ws.removePartOfSpeech();
+		}
+	}
+	
+	/**
+	 * Removes the specified word form
+	 * 
+	 * @param word
+	 * @param idx
+	 */
+	public void removeWordForm(String word, int idx, String wordFormStr) {
+		Collection<DictionaryEntry> entries = lookupByEntry(word);
+		for (DictionaryEntry e : entries) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) {
+				for (WordForm wf : ws.getWorldForms()) {
+					if (wf.getWordForm().equals(wordFormStr)) {
+						ws.removeWordForm(wf);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * 
 	 * @param ws
 	 * @param e

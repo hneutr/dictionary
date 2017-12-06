@@ -141,6 +141,10 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 		this.wordSenses.add(ws);
 	}
 	
+	public void removeSense(WordSense ws) {
+		this.wordSenses.remove(ws);
+	}
+	
 	public WordForm getWordRoot() {
 		return this.wordRoot;
 	}
