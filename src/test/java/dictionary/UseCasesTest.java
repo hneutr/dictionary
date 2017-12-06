@@ -18,7 +18,7 @@ public class UseCasesTest {
 	public void addSingleEntryTest() {
 		
 		// Add via command
-		AbstractCommand addCmd = new AddCommand("test","to see if something works", "Verb");
+		AbstractCommand addCmd = new AddCommand("test", DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE);
 		CommandInvoker cmdInvoke = new CommandInvoker();
 		cmdInvoke.addToQueue(addCmd);
 		
