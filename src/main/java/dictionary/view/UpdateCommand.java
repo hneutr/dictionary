@@ -44,15 +44,15 @@ public class UpdateCommand extends DictionaryCommand {
 				status = getIdentifierString(query) + ": set Word Root to " + target;
 				break;
 			case DEFINITION_QUERY_TYPE: 
-				Dictionary.getInstance().updateDefinition(query, idx, target);
+				//Dictionary.getInstance().updateDefinition(query, idx, target);
 				status = getIdentifierString(query, idx) + ": set Definition to " + target;
 				break;
 			case PART_OF_SPEECH_QUERY_TYPE: 
-				Dictionary.getInstance().updatePartOfSpeech(query, idx, target);
+				//Dictionary.getInstance().updatePartOfSpeech(query, idx, target);
 				status = getIdentifierString(query, idx) + ": set Part of Speech to " + target;
 				break;
 			case WORD_FORM_QUERY_TYPE:
-				Dictionary.getInstance().updateWordForm(query, idx, oldWordForm, target);
+				//Dictionary.getInstance().updateWordForm(query, idx, oldWordForm, target);
 				status = getIdentifierString(query, idx, oldWordForm) + ": set Word Form to " + target;
 				break;
 			default: 

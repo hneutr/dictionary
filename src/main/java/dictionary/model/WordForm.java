@@ -48,6 +48,10 @@ public class WordForm implements ICollide<WordForm>{
 		return wordForm;
 	}
 	
+	public void setWordForm(String wordForm) {
+		this.wordForm = wordForm;
+	}
+	
 	public String getStem() {
 		return stemmerAlgo.stem(getWordForm());
 	}

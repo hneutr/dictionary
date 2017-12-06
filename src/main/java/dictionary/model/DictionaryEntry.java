@@ -149,6 +149,10 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 		return this.wordRoot;
 	}
 	
+	public void setWordRoot(WordForm wf) {
+		this.wordRoot = wf;
+	}
+	
 	public int getId() {
 		return id;
 	}

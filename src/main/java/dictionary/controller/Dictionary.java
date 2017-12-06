@@ -275,6 +275,55 @@ public class Dictionary implements ICollide<String> {
 	}
 	
 	/**
+	 * Update entry spelling
+	 */
+	public void updateDictionaryEntry(String word, String newWord) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			e.setWordRoot(new WordForm(newWord));
+		}
+	}
+	
+	/**
+	 * Update definition
+	 */
+	public void updateDefinition(String word, int idx, String def) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) ws.setDefinition(new Definition(def));
+		}
+	}
+	
+	/**
+	 * Update POS
+	 */
+	public void updatePartOfSpeech(String word, int idx, String pos) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) ws.setPartOfSpeech(new PartOfSpeech(pos));
+		}
+	}
+	
+	/**
+	 * Update word form
+	 */
+	public void updateWordForm(String word, int idx, String oldWordForm, String newWordForm) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) {
+				for (WordForm wf : ws.getWorldForms()) {
+					if (wf.getWordForm().equals(oldWordForm)) {
+						wf.setWordForm(newWordForm);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Returns all entries.
 	 * 
 	 * @return
