@@ -29,7 +29,6 @@ public class RemoveCommand extends DictionaryCommand {
 		} else {
 			System.out.print("No entries found.");
 		}
-
 	}
 
 	@Override

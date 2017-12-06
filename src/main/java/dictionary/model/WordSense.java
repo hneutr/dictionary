@@ -2,6 +2,7 @@ package dictionary.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -134,22 +135,55 @@ public class WordSense implements ICollide<WordSense> {
 		wordForms.add(wordFrom);
 	}
 	
+	/**
+	 * Removes the definition from this word sense.
+	 * 
+	 * @return
+	 */	
+	public void removeDefinition() {
+		setDefinition(new Definition(""));
+	}
+
+	/**
+	 * Removes the PartOfSpeech from this word sense.
+	 * 
+	 * @return
+	 */	
+	public void removePartOfSpeech() {
+		setPartOfSpeech(new PartOfSpeech(""));
+	}
+
+	/**
+	 * Removes the specified WordForm from this word sense.
+	 * 
+	 * @return
+	 */	
+	public void removeWordForm(WordForm wf) {
+		for (Iterator<WordForm> iter = this.getWorldForms().iterator(); iter.hasNext(); ) {
+			WordForm ownWordForm = iter.next();
+
+			if (ownWordForm.collides(wf)) {
+				iter.remove();
+			}
+		}
+	}
+	
 	public String toString() {
 		String output = "";
 		
 		String definitionString = (this.definition != null) ? this.definition.getDefinition() : "";
 		
 		if (! definitionString.isEmpty())
-			output = output + "Definition: " + definitionString + "\n";
+			output = output + "\tDefinition: " + definitionString + "\n";
 		
 		String partOfSpeechString = (this.partOfSpeech != null) ? this.partOfSpeech.getPartOfSpeech() : "";
 		if (! partOfSpeechString.isEmpty())
-			output = output + "PartOfSpeech: " + partOfSpeechString + "\n";
+			output = output + "\tPartOfSpeech: " + partOfSpeechString + "\n";
 		
 		if (! this.wordForms.isEmpty()){
-			output = output + "WordForms: \n";
+			output = output + "\tWordForms: \n";
 			for (WordForm curWordForm : this.wordForms ) {
-				output = output + "\t" + curWordForm.getWordForm() + "\n";
+				output = output + "\t\t" + curWordForm.getWordForm() + "\n";
 			}
 		}
 				
