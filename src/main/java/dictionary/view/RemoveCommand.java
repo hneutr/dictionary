@@ -36,20 +36,15 @@ public class RemoveCommand extends DictionaryCommand {
 	void run() {
 		this.entries = Dictionary.getInstance().lookupByEntry(this.query); 
 		
-		if (queryType.equals(DICTIONARY_ENTRY_QUERY_TYPE)) {
-			if (entries.size() != 0){
-				for (DictionaryEntry entry : entries){
-					Dictionary.getInstance().remove(entry);					
-				}
-			} else {
-				System.out.print("No entries found.");
-			}	
+		switch (queryType) {
+			case DICTIONARY_ENTRY_QUERY_TYPE: Dictionary.getInstance().removeDictionaryEntry(query);
+			case WORD_SENSE_QUERY_TYPE: Dictionary.getInstance().removeWordSense(query, idx);
+			case DEFINITION_QUERY_TYPE: Dictionary.getInstance().removeDefinition(query, idx);
+			case PART_OF_SPEECH_QUERY_TYPE: Dictionary.getInstance().removePartOfSpeech(query, idx);
+			case WORD_FORM_QUERY_TYPE: Dictionary.getInstance().removeWordForm(query, idx, wordForm);			
+				break;
+			default: break;
 		}
-		else if (queryType.equals(DEFINITION_QUERY_TYPE)) {
-			Dictionary.getInstance().removeDefinition(query, idx);			
-		}
-		
-
 	}
 
 	@Override
