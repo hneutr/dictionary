@@ -108,6 +108,14 @@ public class WordSense implements ICollide<WordSense> {
 	}
 	
 	/**
+	 * Returns the POS.
+	 * @return
+	 */
+	public PartOfSpeech getPartOfSpeech() {
+		return this.partOfSpeech;
+	}
+	
+	/**
 	 * Merges this word sense with the given one.
 	 * 
 	 * @param wordSense

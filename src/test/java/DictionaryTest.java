@@ -21,9 +21,9 @@ import dictionary.utils.DatabaseUtil;
 
 public class DictionaryTest {
 
-	private static final String WF_STR = "test";
-	private static final String DEF_STR = "test";
-	private static final String POS_STR = "Noun";
+	private static final String WF_STR = "walk";
+	private static final String DEF_STR = "move via ones feet";
+	private static final String POS_STR = "Verb";
 	
 	private static <T> T getFirst(Collection<T> list) {
 		for (T item : list) return item;
@@ -55,6 +55,8 @@ public class DictionaryTest {
 		
 		// Check word sense
 		for (WordSense ws : re.getWordSenses()) {
+			assertEquals(ws.getDefinition().getDefinition(), DEF_STR);
+			assertEquals(ws.getPartOfSpeech().getPartOfSpeech(), POS_STR);
 			for (WordForm wf : ws.getWorldForms()) {
 				assertEquals(wf.getWordForm(), WF_STR);
 			}
@@ -62,7 +64,7 @@ public class DictionaryTest {
 	}
 
 	@Test
-	public void addRemoveLookupTest() {
+	public void addRemoveTest() {
 		
 		/*
 		 * Case 0: add entry.
@@ -80,16 +82,50 @@ public class DictionaryTest {
 		session.getTransaction().commit();
 		session.close();
 		
-		/*
-		 * Case 1: lookup entry
-		 */
-		re = Dictionary.getInstance().lookupByEntry("test");
-		assertNotNull(re);
+		// Also look up and test that way
+		re = Dictionary.getInstance().lookupByEntry(WF_STR);
+		assertTestEntry(e, re);
 		
 		/*
-		 * Case 2: remove entry
+		 * Case 1: remove entry
 		 */
 		Dictionary.getInstance().remove(e);
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	@Test
+	public void addLookupByEntryTest() {
+		
+		// Load some entries to work with
+		Dictionary.getInstance().addFromFile("entry_list.csv");
+		Collection<DictionaryEntry> es = Dictionary.getInstance().getAllEntries();
+		
+		/*
+		 * Case 0: lookup entry
+		 */
+		DictionaryEntry re = Dictionary.getInstance().lookupByEntry("dance");
+		assertNotNull(re);
+		// Make sure the wf matches
+		assertEquals(re.getWordRoot().getWordForm(), "dance");
+		
+		/*
+		 * Case 1: lookup a different entry
+		 */
+		re = Dictionary.getInstance().lookupByEntry("gargle");
+		assertNotNull(re);
+		// Make sure the wf matches
+		assertEquals(re.getWordRoot().getWordForm(), "gargle");
+		
+		/*
+		 * Case 2: lookup item that does not exist
+		 */
+		re = Dictionary.getInstance().lookupByEntry("tomorrow");
+		assertNull(re);
+		
+		// Remove all from DB
+		for (DictionaryEntry e : es)
+			Dictionary.getInstance().remove(e);
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	@Test
@@ -146,6 +182,13 @@ public class DictionaryTest {
 		assertNotNull(cheeseSense);
 		WordSense gargleSense = getFirst(gargle.getWordSenses());
 		assertNotNull(gargleSense);
+		
+		// check POS's (they should be null)
+		assertNull(runSense.getPartOfSpeech());
+		assertNull(smileSense.getPartOfSpeech());
+		assertNull(danceSense.getPartOfSpeech());
+		assertNull(cheeseSense.getPartOfSpeech());
+		assertNull(gargleSense.getPartOfSpeech());
 		
 		// check that the word sense also has the word forms
 		assertEquals(getFirst(runSense.getWorldForms()).getWordForm(), "run");
