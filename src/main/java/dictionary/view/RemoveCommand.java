@@ -33,9 +33,7 @@ public class RemoveCommand extends DictionaryCommand {
 	}
 	
 	@Override
-	void run() {
-		this.entries = Dictionary.getInstance().lookupByEntry(this.query); 
-		
+	void run() {		
 		switch (queryType) {
 			case DICTIONARY_ENTRY_QUERY_TYPE: Dictionary.getInstance().removeDictionaryEntry(query);
 			case WORD_SENSE_QUERY_TYPE: Dictionary.getInstance().removeWordSense(query, idx);
