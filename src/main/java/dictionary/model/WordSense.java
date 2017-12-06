@@ -140,16 +140,16 @@ public class WordSense implements ICollide<WordSense> {
 		String definitionString = (this.definition != null) ? this.definition.getDefinition() : "";
 		
 		if (! definitionString.isEmpty())
-			output = output + "Definition: " + definitionString + "\n";
+			output = output + "\tDefinition: " + definitionString + "\n";
 		
 		String partOfSpeechString = (this.partOfSpeech != null) ? this.partOfSpeech.getPartOfSpeech() : "";
 		if (! partOfSpeechString.isEmpty())
-			output = output + "PartOfSpeech: " + partOfSpeechString + "\n";
+			output = output + "\tPartOfSpeech: " + partOfSpeechString + "\n";
 		
 		if (! this.wordForms.isEmpty()){
-			output = output + "WordForms: \n";
+			output = output + "\tWordForms: \n";
 			for (WordForm curWordForm : this.wordForms ) {
-				output = output + "\t" + curWordForm.getWordForm() + "\n";
+				output = output + "\t\t" + curWordForm.getWordForm() + "\n";
 			}
 		}
 				
