@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import dictionary.model.Definition;
 import dictionary.model.DictionaryEntry;
 import dictionary.model.FileUtils;
 import dictionary.model.WordSense;
 import dictionary.utils.DatabaseUtil;
 import dictionary.model.ICollide;
+import dictionary.model.PartOfSpeech;
 import dictionary.model.WordForm;
 
 /**
@@ -41,6 +43,59 @@ public class Dictionary implements ICollide<String> {
 	// Private so it can't be manually created
 	private Dictionary() {
 		this.entries = this.getAllEntries();
+	}
+	
+	/**
+	 * Creates and adds a new entry.
+	 * 
+	 * @param word
+	 */
+	public void addDictionaryEntry(String word) {
+		DictionaryEntry e = new DictionaryEntry(new WordForm(word));
+		addEntry(e);
+	}
+	
+	/**
+	 * Adds a new blank word sense to the matching entry(ies)
+	 */
+	public void addWordSense(String word) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			e.addSense(new WordSense(new Definition(""), new PartOfSpeech("")));
+		}
+	}
+	
+	/**
+	 * Adds a def to an specified word sense
+	 */
+	public void addDefinition(String word, int idx, String def) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) ws.setDefinition(new Definition(def));
+		}
+	}
+	
+	/**
+	 * Adds a POS to an specified word sense
+	 */
+	public void addPartOfSpeech(String word, int idx, String pos) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) ws.setPartOfSpeech(new PartOfSpeech(pos));
+		}
+	}
+	
+	/**
+	 * Adds a word form to an specified word sense
+	 */
+	public void addWordForm(String word, int idx, String form) {
+		Collection<DictionaryEntry> es = lookupByEntry(word);
+		for (DictionaryEntry e : es) {
+			WordSense ws = e.getWordSenseByIdx(idx);
+			if (ws != null) ws.addWordForm(new WordForm(form));
+		}
 	}
 	
 	/**

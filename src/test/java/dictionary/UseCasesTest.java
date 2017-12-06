@@ -32,4 +32,34 @@ public class UseCasesTest {
 		// Check
 	    assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
+	
+	// UR-14
+	@Test
+	public void removeEntryTest() {
+		
+	}
+	
+	// UR-15
+	@Test
+	public void removeWordSenseTest() {
+		
+	}
+	
+	// UR-16
+	@Test
+	public void removePartOfSpeechTest() {
+		
+	}
+	
+	// UR-17
+	@Test
+	public void removeDefintionTest() {
+		
+	}
+	
+	// UR-18
+	@Test
+	public void removeWordFormTest() {
+		
+	}
 }
