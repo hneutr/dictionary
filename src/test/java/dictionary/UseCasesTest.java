@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import dictionary.controller.Dictionary;
 import dictionary.model.DictionaryEntry;
+import dictionary.model.WordForm;
 import dictionary.model.WordSense;
 import dictionary.view.AbstractCommand;
 import dictionary.view.AddCommand;
@@ -181,6 +182,72 @@ public class UseCasesTest {
 		AbstractCommand removeCmd = new RemoveCommand("tested", DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE);
 		cmdInvoke.addToQueue(removeCmd);
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	// UR-08 - User can update a word form spelling.
+	@Test
+	public void updateWordFormTest() {
+		// Add via command
+		addTestEntry();
+		
+		// Add a word sense
+		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
+		cmdInvoke.addToQueue(addSenseCmd);
+		
+		// Add a word form
+		AbstractCommand addWFCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_FORM_QUERY_TYPE, 0, "a old wf");
+		cmdInvoke.addToQueue(addWFCmd);
+		
+		// Update and check
+		AbstractCommand updateCmd = new UpdateCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_FORM_QUERY_TYPE, 0, "a old wf", "a new wf");
+		cmdInvoke.addToQueue(updateCmd);
+		WordSense ws = getFirst(getFirst(Dictionary.getInstance().lookupByEntry(TEST0_ENTRY_WORD)).getWordSenses());
+		WordForm wf = getFirst(ws.getWorldForms());
+		assertNotNull(wf);
+		assertEquals("a new wf", wf.getWordForm());
+		
+		// Remove
+		removeTestEntry();
+	}
+	
+	// UR-09 - User can update an update a definition.
+	@Test
+	public void updateDefinitionTest() {
+		// Add via command
+		addTestEntry();
+		
+		// Add a word sense
+		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
+		cmdInvoke.addToQueue(addSenseCmd);
+		
+		// Update and check
+		AbstractCommand updateCmd = new UpdateCommand(TEST0_ENTRY_WORD, DictionaryCommand.DEFINITION_QUERY_TYPE, 0, "a new def");
+		cmdInvoke.addToQueue(updateCmd);
+		WordSense ws = getFirst(getFirst(Dictionary.getInstance().lookupByEntry(TEST0_ENTRY_WORD)).getWordSenses());
+		assertEquals("a new def", ws.getDefinition().getDefinition());
+		
+		// Remove
+		removeTestEntry();
+	}
+	
+	// UR-10 - User can update an update a POS.
+	@Test
+	public void updatePOSTest() {
+		// Add via command
+		addTestEntry();
+		
+		// Add a word sense
+		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
+		cmdInvoke.addToQueue(addSenseCmd);
+		
+		// Update and check
+		AbstractCommand updateCmd = new UpdateCommand(TEST0_ENTRY_WORD, DictionaryCommand.PART_OF_SPEECH_QUERY_TYPE, 0, "Noun");
+		cmdInvoke.addToQueue(updateCmd);
+		WordSense ws = getFirst(getFirst(Dictionary.getInstance().lookupByEntry(TEST0_ENTRY_WORD)).getWordSenses());
+		assertEquals("Noun", ws.getPartOfSpeech().getPartOfSpeech());
+		
+		// Remove
+		removeTestEntry();
 	}
 	
 	// UR-14

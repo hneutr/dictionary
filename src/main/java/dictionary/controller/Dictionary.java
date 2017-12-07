@@ -298,22 +298,14 @@ public class Dictionary implements ICollide<String> {
 	 * Update definition
 	 */
 	public void updateDefinition(String word, int idx, String def) {
-		Collection<DictionaryEntry> es = lookupByEntry(word);
-		for (DictionaryEntry e : es) {
-			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) ws.setDefinition(new Definition(def));
-		}
+		addDefinition(word, idx, def);
 	}
 	
 	/**
 	 * Update POS
 	 */
 	public void updatePartOfSpeech(String word, int idx, String pos) {
-		Collection<DictionaryEntry> es = lookupByEntry(word);
-		for (DictionaryEntry e : es) {
-			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) ws.setPartOfSpeech(new PartOfSpeech(pos));
-		}
+		addPartOfSpeech(word, idx, pos);
 	}
 	
 	/**
@@ -329,6 +321,7 @@ public class Dictionary implements ICollide<String> {
 						wf.setWordForm(newWordForm);
 					}
 				}
+				addEntry(e); // make sure entry is up to date
 			}
 		}
 	}
