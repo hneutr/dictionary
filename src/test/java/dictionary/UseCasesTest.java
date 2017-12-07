@@ -27,34 +27,53 @@ public class UseCasesTest {
 
 	private static final CommandInvoker cmdInvoke = new CommandInvoker();
 	
+	// Properties for entry 0
 	private static final String TEST0_ENTRY_WORD = "test";
 	private static final String TEST0_ENTRY_WS_DEF = "to see if something works";
 	private static final String TEST0_ENTRY_WS_WF = "testing";
+	private static final String TEST0_ENTRY_WS_POS = "Verb";
+	
+	// Properties for entry 1
+	private static final String TEST1_ENTRY_WORD = "river";
+	private static final String TEST1_ENTRY_WS_DEF = "a large stream of water";
+	private static final String TEST1_ENTRY_WS_WF = "rivers";
+	private static final String TEST1_ENTRY_WS_POS = "Noun";
 	
 	private static <T> T getFirst(Collection<T> list) {
 		for (T item : list) return item;
 		return null;
 	}
 	
-	// Adds a test entry via the AddCommand
-	private static void addTestEntry() {
+	// Adds test0 entry via the AddCommand
+	private static void addTest0Entry() {
 		AbstractCommand addCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE);
 		cmdInvoke.addToQueue(addCmd);
-		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 	}
 	
-	// Removes a test entry via the RemoveCommand
-	private static void removeTestEntry() {
+	// Removes test0 entry via the RemoveCommand
+	private static void removeTest0Entry() {
 		AbstractCommand removeCmd = new RemoveCommand(TEST0_ENTRY_WORD, DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE);
 		cmdInvoke.addToQueue(removeCmd);
-	    assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	// Adds test1 entry via the AddCommand
+	private static void addTest1Entry() {
+		AbstractCommand addCmd = new AddCommand(TEST1_ENTRY_WORD, DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE);
+		cmdInvoke.addToQueue(addCmd);
+	}
+	
+	// Removes test1 entry via the RemoveCommand
+	private static void removeTest1Entry() {
+		AbstractCommand removeCmd = new RemoveCommand(TEST1_ENTRY_WORD, DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE);
+		cmdInvoke.addToQueue(removeCmd);
 	}
 	
 	// UR-01 - User can add an entry.
 	@Test
 	public void addEntryTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Check
 		DictionaryEntry e = getFirst(Dictionary.getInstance().lookupByEntry(TEST0_ENTRY_WORD));
@@ -62,14 +81,16 @@ public class UseCasesTest {
 		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-02 - User can add a Word Sense to an Entry.
 	@Test
 	public void addWordSenseTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Check (we expect that the entry does not have a sense yet)
 		DictionaryEntry e = getFirst(Dictionary.getInstance().lookupByEntry(TEST0_ENTRY_WORD));
@@ -83,14 +104,16 @@ public class UseCasesTest {
 		assertEquals(1, e.getWordSenses().size());
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-03 - User can add a Definition to a Word Sense.
 	@Test
 	public void addDefinitionTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Add a word sense
 		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
@@ -103,14 +126,16 @@ public class UseCasesTest {
 		assertEquals(TEST0_ENTRY_WS_DEF, ws.getDefinition().getDefinition());
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-04 - User can add a Word Form to a Word Sense.
 	@Test
 	public void addWordFormTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Add a word sense
 		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
@@ -124,14 +149,16 @@ public class UseCasesTest {
 		assertEquals(TEST0_ENTRY_WS_WF, getFirst(ws.getWorldForms()).getWordForm());
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-05 - User can add a POS to a Word Sense.
 	@Test
 	public void addPOSTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Add a word sense
 		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
@@ -144,7 +171,8 @@ public class UseCasesTest {
 		assertEquals("Verb", ws.getPartOfSpeech().getPartOfSpeech());
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-06 - User can add entries in batch (from file)
@@ -170,7 +198,8 @@ public class UseCasesTest {
 	@Test
 	public void updateEntryTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Update and check
 		AbstractCommand updateCmd = new UpdateCommand(TEST0_ENTRY_WORD, DictionaryCommand.DICTIONARY_ENTRY_QUERY_TYPE, "tested");
@@ -188,7 +217,8 @@ public class UseCasesTest {
 	@Test
 	public void updateWordFormTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Add a word sense
 		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
@@ -207,14 +237,16 @@ public class UseCasesTest {
 		assertEquals("a new wf", wf.getWordForm());
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-09 - User can update an update a definition.
 	@Test
 	public void updateDefinitionTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Add a word sense
 		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
@@ -227,14 +259,16 @@ public class UseCasesTest {
 		assertEquals("a new def", ws.getDefinition().getDefinition());
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-10 - User can update an update a POS.
 	@Test
 	public void updatePOSTest() {
 		// Add via command
-		addTestEntry();
+		addTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 1);
 		
 		// Add a word sense
 		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
@@ -247,7 +281,114 @@ public class UseCasesTest {
 		assertEquals("Noun", ws.getPartOfSpeech().getPartOfSpeech());
 		
 		// Remove
-		removeTestEntry();
+		removeTest0Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	// UR-11 - User can lookup Entries by word.
+	@Test
+	public void lookupByEntryTest() {
+		// Add via command
+		addTest0Entry();
+		addTest1Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 2);
+		
+		// Check
+		DictionaryEntry e = getFirst(Dictionary.getInstance().lookupByEntry(TEST0_ENTRY_WORD));
+		assertNotNull(e);
+		assertEquals(TEST0_ENTRY_WORD, e.getWordRoot().getWordForm());
+		e = getFirst(Dictionary.getInstance().lookupByEntry(TEST1_ENTRY_WORD));
+		assertNotNull(e);
+		assertEquals(TEST1_ENTRY_WORD, e.getWordRoot().getWordForm());
+		
+		// Lookup by something that does not exist
+		e = getFirst(Dictionary.getInstance().lookupByEntry("time"));
+		assertNull(e);
+		
+		// Remove
+		removeTest0Entry();
+		removeTest1Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	// UR-12 - User can lookup Entries by definition.
+	@Test
+	public void lookupByDefinitionTest() {
+		// Add via command
+		addTest0Entry();
+		addTest1Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 2);
+		
+		// Add a word sense (test0)
+		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
+		cmdInvoke.addToQueue(addSenseCmd);
+		
+		// Add a definition (test0)
+		AbstractCommand addDefCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.DEFINITION_QUERY_TYPE, 0, TEST0_ENTRY_WS_DEF);
+		cmdInvoke.addToQueue(addDefCmd);
+		
+		// Add a word sense (test1)
+		addSenseCmd = new AddCommand(TEST1_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
+		cmdInvoke.addToQueue(addSenseCmd);
+		
+		// Add a definition (test1)
+		addDefCmd = new AddCommand(TEST1_ENTRY_WORD, DictionaryCommand.DEFINITION_QUERY_TYPE, 0, TEST1_ENTRY_WS_DEF);
+		cmdInvoke.addToQueue(addDefCmd);
+		
+		// Lookup def and check 
+		DictionaryEntry e = getFirst(Dictionary.getInstance().lookupByDefinition(TEST0_ENTRY_WS_DEF));
+		assertEquals(TEST0_ENTRY_WORD, e.getWordRoot().getWordForm());
+		e = getFirst(Dictionary.getInstance().lookupByDefinition(TEST1_ENTRY_WS_DEF));
+		assertEquals(TEST1_ENTRY_WORD, e.getWordRoot().getWordForm());
+		
+		// Lookup fake
+		e = getFirst(Dictionary.getInstance().lookupByDefinition("time"));
+		assertNull(e);
+		
+		// Remove
+		removeTest0Entry();
+		removeTest1Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
+	}
+	
+	// UR-13 - User can lookup Entries by POS.
+	@Test
+	public void lookupByPOSTest() {
+		// Add via command
+		addTest0Entry();
+		addTest1Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 2);
+		
+		// Add a word sense (test0)
+		AbstractCommand addSenseCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
+		cmdInvoke.addToQueue(addSenseCmd);
+		
+		// Add a POS (test0)
+		AbstractCommand addPOSCmd = new AddCommand(TEST0_ENTRY_WORD, DictionaryCommand.PART_OF_SPEECH_QUERY_TYPE, 0, TEST0_ENTRY_WS_POS);
+		cmdInvoke.addToQueue(addPOSCmd);
+		
+		// Add a word sense (test1)
+		addSenseCmd = new AddCommand(TEST1_ENTRY_WORD, DictionaryCommand.WORD_SENSE_QUERY_TYPE);
+		cmdInvoke.addToQueue(addSenseCmd);
+		
+		// Add a POS (test1)
+		addPOSCmd = new AddCommand(TEST1_ENTRY_WORD, DictionaryCommand.PART_OF_SPEECH_QUERY_TYPE, 0, TEST1_ENTRY_WS_POS);
+		cmdInvoke.addToQueue(addPOSCmd);
+		
+		// Lookup POS and check 
+		DictionaryEntry e = getFirst(Dictionary.getInstance().lookupByPartOfSpeech(TEST0_ENTRY_WS_POS));
+		assertEquals(TEST0_ENTRY_WORD, e.getWordRoot().getWordForm());
+		e = getFirst(Dictionary.getInstance().lookupByPartOfSpeech(TEST1_ENTRY_WS_POS));
+		assertEquals(TEST1_ENTRY_WORD, e.getWordRoot().getWordForm());
+		
+		// Lookup fake
+		e = getFirst(Dictionary.getInstance().lookupByPartOfSpeech("time"));
+		assertNull(e);
+		
+		// Remove
+		removeTest0Entry();
+		removeTest1Entry();
+		assertEquals(Dictionary.getInstance().getAllEntries().size(), 0);
 	}
 	
 	// UR-14
