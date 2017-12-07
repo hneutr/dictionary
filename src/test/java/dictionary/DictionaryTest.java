@@ -20,6 +20,7 @@ import dictionary.utils.DatabaseUtil;
  *
  * The purpose of this unit test is to test the database aspect
  * of the dictionary. Thus these will be low-level tests on the model.
+ * The tests overlap some.
  */
 public class DictionaryTest {
 

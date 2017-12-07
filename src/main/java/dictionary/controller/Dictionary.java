@@ -2,6 +2,7 @@ package dictionary.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -362,7 +363,10 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> entries = lookupByEntry(word);
 		for (DictionaryEntry e : entries) {
 			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) ws.removeDefinition();
+			if (ws != null) {
+				ws.removeDefinition();
+				addEntry(e); // make sure entry is up to date
+			}
 		}
 	}
 	
@@ -376,7 +380,10 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> entries = lookupByEntry(word);
 		for (DictionaryEntry e : entries) {
 			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) e.removeSense(ws);
+			if (ws != null) {
+				e.removeSense(ws);
+				addEntry(e); // make sure entry is up to date
+			}
 		}
 	}
 	
@@ -390,7 +397,10 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> entries = lookupByEntry(word);
 		for (DictionaryEntry e : entries) {
 			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) ws.removePartOfSpeech();
+			if (ws != null) {
+				ws.removePartOfSpeech();
+				addEntry(e); // make sure entry is up to date
+			}
 		}
 	}
 	
@@ -405,11 +415,13 @@ public class Dictionary implements ICollide<String> {
 		for (DictionaryEntry e : entries) {
 			WordSense ws = e.getWordSenseByIdx(idx);
 			if (ws != null) {
-				for (WordForm wf : ws.getWorldForms()) {
+				for (Iterator<WordForm> iter = ws.getWorldForms().iterator(); iter.hasNext();) {
+					WordForm wf = iter.next();
 					if (wf.getWordForm().equals(wordFormStr)) {
-						ws.removeWordForm(wf);
+						iter.remove();
 					}
 				}
+				addEntry(e); // make sure entry is up to date
 			}
 		}
 	}

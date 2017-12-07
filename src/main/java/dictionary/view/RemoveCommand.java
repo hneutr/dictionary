@@ -20,13 +20,13 @@ public class RemoveCommand extends DictionaryCommand {
 		this.queryType = queryType;
 	}
 
-	public RemoveCommand(String query, int idx, String queryType) {
+	public RemoveCommand(String query, String queryType, int idx) {
 		this(query, queryType);
 		this.idx = idx;
 	}
 
-	public RemoveCommand(String query, int idx, String queryType, String wordForm) {
-		this(query, idx, queryType);
+	public RemoveCommand(String query, String queryType, int idx, String wordForm) {
+		this(query, queryType, idx);
 		this.wordForm = wordForm;
 	}
 	
