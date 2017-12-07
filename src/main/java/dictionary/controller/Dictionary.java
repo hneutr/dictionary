@@ -73,7 +73,10 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
 		for (DictionaryEntry e : es) {
 			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) ws.setDefinition(new Definition(def));
+			if (ws != null) {
+				ws.setDefinition(new Definition(def));
+				addEntry(e); // make sure entry is up to date
+			}
 		}
 	}
 	
@@ -84,7 +87,10 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
 		for (DictionaryEntry e : es) {
 			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) ws.setPartOfSpeech(new PartOfSpeech(pos));
+			if (ws != null) {
+				ws.setPartOfSpeech(new PartOfSpeech(pos));
+				addEntry(e); // make sure entry is up to date
+			}
 		}
 	}
 	
@@ -95,7 +101,10 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
 		for (DictionaryEntry e : es) {
 			WordSense ws = e.getWordSenseByIdx(idx);
-			if (ws != null) ws.addWordForm(new WordForm(form));
+			if (ws != null) {
+				ws.addWordForm(new WordForm(form));
+				addEntry(e); // make sure entry is up to date
+			}
 		}
 	}
 	
@@ -281,6 +290,7 @@ public class Dictionary implements ICollide<String> {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
 		for (DictionaryEntry e : es) {
 			e.setWordRoot(new WordForm(newWord));
+			addEntry(e); // make sure entry is up to date
 		}
 	}
 	

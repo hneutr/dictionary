@@ -15,6 +15,12 @@ import dictionary.model.WordForm;
 import dictionary.model.WordSense;
 import dictionary.utils.DatabaseUtil;
 
+/**
+ * @author alexkillian
+ *
+ * The purpose of this unit test is to test the database aspect
+ * of the dictionary. Thus these will be low-level tests on the model.
+ */
 public class DictionaryTest {
 
 	// Defs for loaded test entries
