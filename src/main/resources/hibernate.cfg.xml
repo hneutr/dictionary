@@ -1,3 +1,4 @@
+<!-- Hibernate slides on class website by Elizabeth Boese were an excellent resource for getting this right. -->
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
@@ -9,7 +10,7 @@
 		<!-- JDBC Connector. See DatabaseUtil for more connection details. -->
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		
-		<!-- Print SQL Output -->
+		<!-- Don't Print SQL Output -->
 		<property name="show_sql">false</property>
 		
 		<!-- SQL Dialect -->

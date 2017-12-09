@@ -1,7 +1,7 @@
 package dictionary.model;
 
 /**
- * @author alexkillian
+ * @author Alex Killian
  *
  * Interface that says which classes can detect collisions.
  */

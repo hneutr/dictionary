@@ -115,19 +115,10 @@ public class DictionaryEntry implements ICollide<DictionaryEntry> {
 		return null;
 	}
 	
-	/**
-	 * 
-	 * @param ws
-	 * @return
-	 */
 	public List<String> merge(WordSense ws) {
 		return null;
 	}
 	
-	/**
-	 * 
-	 * @param ws
-	 */
 	public void mergeSense(WordSense ws) {
 
 	}

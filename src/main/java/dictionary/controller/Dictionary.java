@@ -68,7 +68,7 @@ public class Dictionary implements ICollide<String> {
 	}
 	
 	/**
-	 * Adds a def to an specified word sense
+	 * Adds a def to a specified word sense
 	 */
 	public void addDefinition(String word, int idx, String def) {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
@@ -82,7 +82,7 @@ public class Dictionary implements ICollide<String> {
 	}
 	
 	/**
-	 * Adds a POS to an specified word sense
+	 * Adds a POS to a specified word sense
 	 */
 	public void addPartOfSpeech(String word, int idx, String pos) {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
@@ -96,7 +96,7 @@ public class Dictionary implements ICollide<String> {
 	}
 	
 	/**
-	 * Adds a word form to an specified word sense
+	 * Adds a word form to a specified word sense
 	 */
 	public void addWordForm(String word, int idx, String form) {
 		Collection<DictionaryEntry> es = lookupByEntry(word);
@@ -426,11 +426,6 @@ public class Dictionary implements ICollide<String> {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param ws
-	 * @param e
-	 */
 	public void merge(WordSense ws, DictionaryEntry e) {
 		
 	}

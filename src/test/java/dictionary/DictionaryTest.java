@@ -16,7 +16,7 @@ import dictionary.model.WordSense;
 import dictionary.utils.DatabaseUtil;
 
 /**
- * @author alexkillian
+ * @author Alex Killian
  *
  * The purpose of this unit test is to test the database aspect
  * of the dictionary. Thus these will be low-level tests on the model.

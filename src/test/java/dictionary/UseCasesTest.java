@@ -18,7 +18,7 @@ import dictionary.view.RemoveCommand;
 import dictionary.view.UpdateCommand;
 
 /**
- * @author alexkillian
+ * @author Alex Killian
  *
  * The purpose of this set of unit tests is to make sure that all use cases work and are 
  * accessible through the commands. Thus it also tests the commands. The tests overlap some.
