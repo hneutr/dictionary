@@ -55,7 +55,7 @@ public class DemoTestDriver {
 		in.nextLine();
 		System.out.println("---First: Let's add entries from a CSV file.---");
 		in.nextLine();
-		System.out.println("Loading entires frome file...");
+		System.out.println("Loading entires from file...");
 		loadFromFile();
 		System.out.println("");
 		

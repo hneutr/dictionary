@@ -43,7 +43,6 @@ public class Dictionary implements ICollide<String> {
 	
 	// Private so it can't be manually created
 	private Dictionary() {
-		this.entries = this.getAllEntries();
 	}
 	
 	/**
@@ -333,15 +332,12 @@ public class Dictionary implements ICollide<String> {
 	 * @return
 	 */
 	public List<DictionaryEntry> getAllEntries() {
-		//if (this.entries == null) {
-			Session session = DatabaseUtil.getSessionFactory().openSession();
-			session.beginTransaction();
-			List<DictionaryEntry> es = session.createQuery("from DictionaryEntry").list();
-			session.getTransaction().commit();
-			session.close();
-			return es;
-		//}
-		//return this.entries;
+		Session session = DatabaseUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		this.entries = session.createQuery("from DictionaryEntry").list();
+		session.getTransaction().commit();
+		session.close();
+		return this.entries;
 	}
 	
 	/**
