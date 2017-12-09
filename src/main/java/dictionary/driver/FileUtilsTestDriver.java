@@ -1,12 +1,9 @@
 package dictionary.driver;
 
-import org.hibernate.Session;
-
 import java.util.List;
 
 import dictionary.model.DictionaryEntry;
 import dictionary.model.FileUtils;
-import dictionary.utils.DatabaseUtil;
 import java.util.ArrayList;
 
 public class FileUtilsTestDriver {

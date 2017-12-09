@@ -1,6 +1,5 @@
 package dictionary.utils;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -10,7 +9,7 @@ import org.hibernate.cfg.Configuration;
  * @author Alex Killian
  *
  * Utility class for our database.
- * Inspired by HibernateUtil.java from Hibernate slides on class website by Boese.
+ * Inspired by HibernateUtil.java from Hibernate slides on class website by Elizabeth Boese.
  */
 public class DatabaseUtil {
 
