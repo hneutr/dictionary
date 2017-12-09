@@ -1,11 +1,6 @@
 package dictionary.view;
 
 import dictionary.controller.Dictionary;
-import dictionary.model.Definition;
-import dictionary.model.DictionaryEntry;
-import dictionary.model.PartOfSpeech;
-import dictionary.model.WordForm;
-import dictionary.model.WordSense;
 
 /**
  * 

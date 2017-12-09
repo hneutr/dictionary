@@ -1,7 +1,5 @@
 package dictionary.view;
 
-import dictionary.model.*;
-
 /**
  * 
  * @author Hunter Wapman
@@ -9,11 +7,6 @@ import dictionary.model.*;
  */
 public abstract class DictionaryCommand extends AbstractCommand {
 	// stuff for later
-	protected DictionaryEntry entry;
-	protected Definition definition;
-	protected PartOfSpeech partOfSpeech;
-	protected WordForm wordForm;
-	protected WordSense wordSense;
 	protected String status;
 	
 	public static final String FILE_QUERY_TYPE = "file";

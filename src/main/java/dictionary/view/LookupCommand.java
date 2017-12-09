@@ -1,6 +1,5 @@
 package dictionary.view;
 
-import dictionary.model.DictionaryEntry;
 import dictionary.controller.Dictionary;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +12,7 @@ import java.util.Collection;
 public class LookupCommand extends DictionaryCommand {
 	private String query;
 	private String queryType;
-	private Collection<DictionaryEntry> entries = new ArrayList<DictionaryEntry>();
+	private Collection<?> entries = new ArrayList<>();
 	
 	public LookupCommand(String query, String queryType) {
 		this.query = query;
@@ -42,7 +41,7 @@ public class LookupCommand extends DictionaryCommand {
 		if (validQuery) {
 			if (entries.size() != 0){
 				status = "";
-				for (DictionaryEntry entry : entries){
+				for (Object entry : entries){
 					status = status + entry.toString();				
 				}
 			} else {
