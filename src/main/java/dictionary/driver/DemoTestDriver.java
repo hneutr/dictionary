@@ -55,13 +55,13 @@ public class DemoTestDriver {
 		in.nextLine();
 		System.out.println("---First: Let's add entries from a CSV file.---");
 		in.nextLine();
-		System.out.println("Loading entires from file...");
+		System.out.println("Loading entries from file...");
 		loadFromFile();
 		System.out.println("");
 		
 		// Second use case
 		in.nextLine();
-		System.out.println("---Second: Let's lookup some of the entries that we just added.---");
+		System.out.println("---Second: Let's look up some of the entries that we just added.---");
 		in.nextLine();
 		System.out.println("Let's look up cheese");
 		in.nextLine();
