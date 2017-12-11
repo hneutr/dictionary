@@ -8,8 +8,6 @@ import dictionary.controller.Dictionary;
  *
  */
 public class UpdateCommand extends DictionaryCommand {
-	private String queryType;
-	private String query;
 	private String target;
 	private String oldWordForm;
 	private int idx;

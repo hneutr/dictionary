@@ -8,6 +8,8 @@ package dictionary.view;
 public abstract class DictionaryCommand extends AbstractCommand {
 	// stuff for later
 	protected String status;
+	protected String queryType;
+	protected String query;
 	
 	public static final String FILE_QUERY_TYPE = "file";
 	public static final String DICTIONARY_ENTRY_QUERY_TYPE = "entry";

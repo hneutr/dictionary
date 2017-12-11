@@ -10,8 +10,6 @@ import java.util.Collection;
  *
  */
 public class LookupCommand extends DictionaryCommand {
-	private String query;
-	private String queryType;
 	private Collection<?> entries = new ArrayList<>();
 	
 	public LookupCommand(String query, String queryType) {

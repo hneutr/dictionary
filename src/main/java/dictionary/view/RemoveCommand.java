@@ -8,8 +8,6 @@ import dictionary.controller.Dictionary;
  *
  */
 public class RemoveCommand extends DictionaryCommand {
-	private String query;
-	private String queryType;
 	private int idx;
 	private String wordForm;
 	

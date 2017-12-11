@@ -8,8 +8,6 @@ import dictionary.controller.Dictionary;
  *
  */
 public class AddCommand extends DictionaryCommand {
-	private String queryType;
-	private String query;
 	private String target;
 	private int idx;
 	
